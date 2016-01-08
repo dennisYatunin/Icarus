@@ -33,3 +33,17 @@ c.execute(q)
 keepadding = raw_input('Do you have some data to import? (y/n) ')
 if keepadding == 'y':
 	open('../data.csv')
+
+
+#when importing data, csv is same as query, in order EXCEPT
+#salt, hash, permissions, and schedule fields are omitted
+#teacher csv is the same
+#we need more parent info (ie name??)
+#made parent data same as student (2 parents two diff addresses possibly)
+#with the exception of an inserted id right after their own, its their child id
+#prolly need list of child ids
+#unless we institute a one child policy??
+#i don't think we have that power
+
+#and we didnt get to sections yet to *shrug*
+
