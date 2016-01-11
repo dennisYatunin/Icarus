@@ -1,4 +1,9 @@
 import sqlite3
+from os import urandom
+from hashlib import sha512
+from uuid import uuid4
+from re import search
+from time import gmtime, strftime
 
 print("HALLOA! Welcome to the Icarus initialization stuffs. Please answer some questions for us.")
 maxcourses = int(raw_input('How many periods are there in a day? '))
@@ -16,12 +21,6 @@ q = 'CREATE TABLE students \
 		)'
 c.execute(q)
 
-q = 'CREATE TABLE parents \
-	( \
-		id TEXT, email TEXT, name TEXT, salt INT, hash_value INT, \
-		studids TEXT, address TEXT, city TEXT, zip TEXT, phone TEXT \
-		)'
-c.execute(q)
 
 q = 'CREATE TABLE facutly \
 	( \
@@ -31,15 +30,39 @@ q = 'CREATE TABLE facutly \
 		)'
 c.execute(q)
 
-q = []
-students = open('../data/students.csv').readlines()
+studentArray = []
+students = open('data/students.csv').readlines()
 for line in students:
 	line = line.split(',')
-	q.append('INSERT ')
+        password = line[0]
+        # Create a random salt to add to the hash.
+        salt = uuid4().hex
+        # Create a hash, and use string concatenation to make the hash function slow
+        # for added security.
+        hash_value = sha512((password + salt) * 10000).hexdigest()
+        line.insert(3, salt)
+        line.insert(4, hash_value)
+        line = tuple(line)
+        #print line
+        studentArray.append(line)
+        
+c.executemany('INSERT INTO students (id, email, name, salt, hash_value, dob, address, city, zip, phone) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', studentArray  )
 
-q = ['INSERT INTO students (id, email, name, salt, hash_value, dob, address, city, zip, phone) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)' % (line.split(',')[0], line.split(',')[1], line.split(',')[2], line.split(',')[3]) for line in open('../data/students.csv', 'r').readlines()]
-open('../data/parents.csv')
-open('../data/faculty.csv')
+q = "Select * from students"
+for row in c.execute(q):
+        print row
+
+
+
+
+
+
+
+
+
+
+#open('../data/parents.csv')
+#open('../data/faculty.csv')
 
 
 #when importing data, csv is same as query, in order EXCEPT
