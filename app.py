@@ -1,10 +1,11 @@
-from Flask import flask import Flask, render_template, session, request, redirect, url_for
+from flask import Flask, render_template, session, request, redirect, url_for
+from os import urandom
 
 app = Flask(__name__)
 
-@app.route('/')
-def index():
-	pass
+@app.route('/admintools')
+def admintools():
+	return render_template('adminhome.html')
 
 if __name__ == "__main__":
 	app.debug = True
