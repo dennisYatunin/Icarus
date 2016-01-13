@@ -22,7 +22,7 @@ q = 'CREATE TABLE students \
 c.execute(q)
 
 
-q = 'CREATE TABLE facutly \
+q = 'CREATE TABLE faculty \
 	( \
 		id TEXT, email TEXT, name TEXT, salt INT, hash_value INT, permissions INT\
 		dob TEXT, address TEXT, city TEXT, zip TEXT, phone TEXT, \
@@ -43,13 +43,40 @@ for line in students:
         line.insert(3, salt)
         line.insert(4, hash_value)
         line = tuple(line)
-        #print line
+        print"printing line: "
+        print line 
         studentArray.append(line)
         
-c.executemany('INSERT INTO students (id, email, name, salt, hash_value, dob, address, city, zip, phone) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', studentArray  )
+c.executemany('INSERT INTO students (id, email, name, salt, hash_value, dob, address, city, zip, phone, cursched, pastscheds) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', studentArray  )
 
 q = "Select * from students"
 for row in c.execute(q):
+        print "Entered Student:"
+        print row
+
+
+facultyArray = []
+faculty = open('data/faculty.csv').readlines()
+for line in faculty:
+	line = line.split(',')
+        password = line[0]
+        # Create a random salt to add to the hash.
+        salt = uuid4().hex
+        # Create a hash, and use string concatenation to make the hash function slow
+        # for added security.
+        hash_value = sha512((password + salt) * 10000).hexdigest()
+        line.insert(3, salt)
+        line.insert(4, hash_value)
+        line = tuple(line)
+        #print line
+        facultyArray.append(line)
+        
+c.executemany('INSERT INTO faculty (id, email, name, permissions, salt, hash_value, address, city, zip, phone, cursched, pastscheds) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', facultyArray  )
+print "entered the faculty"
+
+q = "Select * from faculty"
+for row in c.execute(q):
+        print "Entered faculty:"
         print row
 
 

@@ -1,2 +1,2 @@
-"123456789", "email@mail.com", "lastname first", "01/01/1901", "123 Santa Claus Lane APT 7F", "Bumsville", "00000", "123-456-7899"
-"023456789", "email@mail.com", "lastname first", "01/01/1991", "BL alnta Claus Lane APT 7F", "Bumsville", "00990", "1234567899"
+"123456789", "email@mail.com", "lastname first", "01/01/1901", "123 Santa Claus Lane APT 7F", "Bumsville", "00000", "123-456-7899", "Section1;Section2;Sec3;sec4;s5;s6;s7;s8;s9;s10", "Section1;Section2;Sec3;sec4;s5;s6;s7;s8;s9;s10|Section1;Section2;Sec3;sec4;s5;s6;s7;s8;s9;s10|Section1;Section2;Sec3;sec4;s5;s6;s7;s8;s9;s10"
+"023456789", "email@mail.com", "lastname first", "01/01/1991", "BL alnta Claus Lane APT 7F", "Bumsville", "00990", "1234567899", "Section1;Section2;Sec3;sec4;s5;s6;s7;s8;s9;s10", "Section1;Section2;Sec3;sec4;s5;s6;s7;s8;s9;s10|Section1;Section2;Sec3;sec4;s5;s6;s7;s8;s9;s10|Section1;Section2;Sec3;sec4;s5;s6;s7;s8;s9;s10"
