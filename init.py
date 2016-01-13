@@ -43,16 +43,16 @@ for line in students:
         line.insert(3, salt)
         line.insert(4, hash_value)
         line = tuple(line)
-        print"printing line: "
-        print line 
+        #print"printing line: "
+        #print line 
         studentArray.append(line)
         
 c.executemany('INSERT INTO students (id, email, name, salt, hash_value, dob, address, city, zip, phone, cursched, pastscheds) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', studentArray  )
 
 q = "Select * from students"
 for row in c.execute(q):
-        print "Entered Student:"
-        print row
+        #print "Entered Student:"
+        #print row
 
 
 facultyArray = []
@@ -76,12 +76,14 @@ print "entered the faculty"
 
 q = "Select * from faculty"
 for row in c.execute(q):
-        print "Entered faculty:"
-        print row
+        #print "Entered faculty:"
+        #print row
 
 
 
-
+##now for the sections
+#plan: one sectino table lists section name and metadata (teacher, numCredits, grades open, prereqs, etc)
+#
 
 
 
