@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Project Icarus</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<link rel="icon" href="{{ url_for('static', filename='icon.png') }}" type="image/png">
+	<style>
+		.jumbotron {
+			background-color: #000000;
+			color: #fff;
+			padding: 100px 25px;
+		}
+
+		.container-fluid {
+			padding: 60px 50px;
+		}
+		.logo {
+			font-size: 200px;
+		}
+	</style>
+</head>
+<body>
+	<div class="jumbotron text-center">
+		<h1>Icarus Scientific Software</h1>
+		<p>Like Daedalus, but Better</p>
+	</div>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-2">
+				<div class="panel panel-default text-center">
+					<div class="panel-heading">
+						<h3>Dennis Yatunin</h3>
+					</div>
+					<div class="panel-body">
+						<img src="{{ url_for('static', filename='dennis.jpg') }}" class="img-rounded img-responsive" alt="Dennis Yatunin">
+					</div>
+					<div class="panel-footer">
+						<h4><a href="mailto:dyatun@gmail.com">dyatun@gmail.com</a></h4>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-2">
+				<div class="panel panel-default text-center">
+					<div class="panel-heading">
+						<h3>Loren Maggiore</h3>
+					</div>
+					<div class="panel-body">
+						<img src="{{ url_for('static', filename='loren.jpg') }}" class="img-rounded img-responsive" alt="Loren Maggiore">
+					</div>
+					<div class="panel-footer">
+						<h4><a href="mailto:WHAT IS YOUR EMAIL">WHAT IS YOUR EMAIL</a></h4>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-2">
+				<div class="panel panel-default text-center">
+					<div class="panel-heading">
+						<h3>Max Fishelson</h3>
+					</div>
+					<div class="panel-body">
+						<img src="{{ url_for('static', filename='max.jpg') }}" class="img-rounded img-responsive" alt="Max Fishelson">
+					</div>
+					<div class="panel-footer">
+						<h4><a href="mailto:MaxwellKF@aol.com">MaxwellKF@aol.com</a></h4>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<a href="/admintools"><button class="btn btn-default btn-lg">Administrator Tools</button></a>
+				<a href="/studenttools"><button class="btn btn-default btn-lg">Student Tools</button></a>
+				<a href="/facultytools"><button class="btn btn-default btn-lg">Faculty Tools</button></a>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -3,6 +3,10 @@ from os import urandom
 
 app = Flask(__name__)
 
+@app.route('/')
+def home():
+	return render_template('home.html')
+
 @app.route('/admintools')
 def admintools():
 	return render_template('adminhome.html')
