@@ -30,6 +30,12 @@ q = 'CREATE TABLE faculty \
 		)'
 c.execute(q)
 
+q = 'CREATE TABLE sections \
+	( \
+		id TEXT, className TEXT, teacherId TEXT, pd TEXT \
+		)'
+c.execute(q)
+
 studentArray = []
 students = open('data/students.csv').readlines()
 for line in students:
@@ -50,7 +56,7 @@ for line in students:
 c.executemany('INSERT INTO students (id, email, name, salt, hash_value, dob, address, city, zip, phone, cursched, pastscheds) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', studentArray  )
 
 q = "Select * from students"
-for row in c.execute(q):
+#for row in c.execute(q):
         #print "Entered Student:"
         #print row
 
@@ -75,7 +81,7 @@ c.executemany('INSERT INTO faculty (id, email, name, permissions, salt, hash_val
 print "entered the faculty"
 
 q = "Select * from faculty"
-for row in c.execute(q):
+#for row in c.execute(q):
         #print "Entered faculty:"
         #print row
 
@@ -84,9 +90,24 @@ for row in c.execute(q):
 ##now for the sections
 #plan: one sectino table lists section name and metadata (teacher, numCredits, grades open, prereqs, etc)
 #
+sectionArray = []
+sections = open("data/sections.csv").readlines()
+for line in sections:
+        line = line.split(',')
+        q = "create table " + line[0] + " (studentid, attendence, grade)"
+        c.execute(q)
+        sectionArray.append(line)
 
+c.executemany('Insert into sections(id, classname, teacherId, pd) Values (?, ?, ?, ?)', sectionArray)
+q = "select * from sections"
+for row in c.execute(q):
+        print row
 
+q = "select name from sqlite_master where type = 'table'"
+for result in c.execute(q):
+        print result
 
+##now populate the secions databae using the students data
 
 
 
