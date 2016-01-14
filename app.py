@@ -12,7 +12,7 @@ def admintools():
 	return render_template('adminhome.html')
 
 @app.route('/admintools/datagenerate')
-def admintools():
+def datagenerate():
 	return render_template('datagenerate.html')
 
 if __name__ == "__main__":
