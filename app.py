@@ -11,6 +11,10 @@ def home():
 def admintools():
 	return render_template('adminhome.html')
 
+@app.route('/admintools/datagenerate')
+def admintools():
+	return render_template('datagenerate.html')
+
 if __name__ == "__main__":
 	app.debug = True
 	app.secret_key = urandom(24)

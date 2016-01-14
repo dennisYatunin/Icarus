@@ -21,6 +21,10 @@
 		.logo {
 			font-size: 200px;
 		}
+		.p-center {
+			text-align: center;
+			font-size: 2.5vmin;
+		}
 	</style>
 </head>
 <body>
@@ -30,50 +34,31 @@
 	</div>
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-sm-2">
-				<div class="panel panel-default text-center">
-					<div class="panel-heading">
-						<h3>Dennis Yatunin</h3>
-					</div>
-					<div class="panel-body">
-						<img src="{{ url_for('static', filename='dennis.jpg') }}" class="img-rounded img-responsive" alt="Dennis Yatunin">
-					</div>
-					<div class="panel-footer">
-						<h4><a href="mailto:dyatun@gmail.com">dyatun@gmail.com</a></h4>
-					</div>
-				</div>
+			<div class="col-xs-4 col-md-2 col-md-offset-3">
+				<a href="{{ url_for('static', filename='loren.jpg') }}">
+					<img src="{{ url_for('static', filename='loren.jpg') }}" alt="Loren Maggiore" class="img-circle img-responsive">
+				</a>
+				<p class="p-center"><a href="mailto:loren.maggiore@gmail.com">loren.maggiore@gmail.com</a></p>
 			</div>
-			<div class="col-sm-2">
-				<div class="panel panel-default text-center">
-					<div class="panel-heading">
-						<h3>Loren Maggiore</h3>
-					</div>
-					<div class="panel-body">
-						<img src="{{ url_for('static', filename='loren.jpg') }}" class="img-rounded img-responsive" alt="Loren Maggiore">
-					</div>
-					<div class="panel-footer">
-						<h4><a href="mailto:WHAT IS YOUR EMAIL">WHAT IS YOUR EMAIL</a></h4>
-					</div>
-				</div>
+			<div class="col-xs-4 col-md-2">
+				<a href="{{ url_for('static', filename='dennis.jpg') }}">
+					<img src="{{ url_for('static', filename='dennis.jpg') }}" alt="Dennis Yatunin" class="img-circle img-responsive">
+				</a>
+				<p class="p-center"><a href="mailto:dyatun@gmail.com">dyatun@gmail.com</a></p>
 			</div>
-			<div class="col-sm-2">
-				<div class="panel panel-default text-center">
-					<div class="panel-heading">
-						<h3>Max Fishelson</h3>
-					</div>
-					<div class="panel-body">
-						<img src="{{ url_for('static', filename='max.jpg') }}" class="img-rounded img-responsive" alt="Max Fishelson">
-					</div>
-					<div class="panel-footer">
-						<h4><a href="mailto:MaxwellKF@aol.com">MaxwellKF@aol.com</a></h4>
-					</div>
-				</div>
+			<div class="col-xs-4 col-md-2">
+				<a href="{{ url_for('static', filename='max.jpg') }}">
+					<img src="{{ url_for('static', filename='max.jpg') }}" alt="Max Fishelson" class="img-circle img-responsive">
+				</a>
+				<p class="p-center"><a href="mailto:MaxwellKF@aol.com">MaxwellKF@aol.com</a></p>
 			</div>
-			<div class="col-sm-6">
-				<a href="/admintools"><button class="btn btn-default btn-lg">Administrator Tools</button></a>
-				<a href="/studenttools"><button class="btn btn-default btn-lg">Student Tools</button></a>
-				<a href="/facultytools"><button class="btn btn-default btn-lg">Faculty Tools</button></a>
-			</div>
+		</div>
+	</div>
+	<div class="container-fluid">
+		<div class="row">
+			<a href="/admintools"><button class="btn btn-default btn-lg">Administrator Tools</button></a>
+			<a href="/studenttools"><button class="btn btn-default btn-lg">Student Tools</button></a>
+			<a href="/facultytools"><button class="btn btn-default btn-lg">Faculty Tools</button></a>
 		</div>
 	</div>
 </body>
