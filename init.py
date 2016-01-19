@@ -118,10 +118,23 @@ if alreadyDone == False:
                 sched = row[1].split(";")
                 student_id = row[0]
                 for section in sched:
-                        q = "insert into " + section + "(studentid, attendence, grade) values (?, ?, ?)", student_id, "", -1)
-                        c.execute(q)
+						section = section.replace('"', "")
+						q = "insert into " + section + " (studentid, attendence, grade) values (?, ?, ?)"  #% (student_id, "", str(-1))
+						print q
+						c.execute(q, (student_id, "", str(-1)))
 
-        
+		q = "select name from sqlite_master where type = 'table'"
+		tables = []
+        for result in c.execute(q):
+            tables.append(result)
+        print "printing contents"
+        for table in tables:
+        	print table
+        	q = "select * from " + table[0]
+        	for result in c.execute(q):
+        		print result
+
+            
 #open('../data/parents.csv')
 #open('../data/faculty.csv')
 
