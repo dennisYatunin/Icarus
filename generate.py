@@ -38,10 +38,10 @@ def csv(numPeople, hasID, hasEmail, hasDOB, hasAddress, hasPhone, missingData, p
 		if hasAddress:
 			if not missingData or random() < probDeletion:
 				# street address, city, state, zip
-				data[i] += str(randint(1, 9999)) + choice(lastNames) + choice(streetSuffixes) + ', ' +
-				choice(cities) + ', ' + choice(states) + ', ' + str(randint(3000, 99999)) + ', '
+				data[i] += str(randint(1, 9999)) + choice(lastNames) + choice(streetSuffixes) + ' ' +
+				choice(cities) + ' ' + choice(states) + ' ' + str(randint(3000, 99999)) + ', '
 			else:
-				data[i] += ', , , , '
+				data[i] += ', '
 		if hasPhone:
 			if not missingData or random() < probDeletion:
 				# random phone number such that area code doesn't start with a zero,
