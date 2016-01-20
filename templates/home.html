@@ -4,9 +4,10 @@
 	<title>Project Icarus</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 	<link rel="icon" href="{{ url_for('static', filename='icon.png') }}" type="image/png">
 	<style>
 		.jumbotron {
@@ -14,16 +15,8 @@
 			color: #fff;
 			padding: 100px 25px;
 		}
-
 		.container-fluid {
 			padding: 60px 50px;
-		}
-		.logo {
-			font-size: 200px;
-		}
-		.p-center {
-			text-align: center;
-			font-size: 2.5vmin;
 		}
 	</style>
 </head>
@@ -38,19 +31,16 @@
 				<a href="{{ url_for('static', filename='loren.jpg') }}">
 					<img src="{{ url_for('static', filename='loren.jpg') }}" alt="Loren Maggiore" class="img-circle img-responsive">
 				</a>
-				<p class="p-center"><a href="mailto:loren.maggiore@gmail.com">loren.maggiore@gmail.com</a></p>
 			</div>
 			<div class="col-xs-4 col-md-2">
 				<a href="{{ url_for('static', filename='dennis.jpg') }}">
 					<img src="{{ url_for('static', filename='dennis.jpg') }}" alt="Dennis Yatunin" class="img-circle img-responsive">
 				</a>
-				<p class="p-center"><a href="mailto:dyatun@gmail.com">dyatun@gmail.com</a></p>
 			</div>
 			<div class="col-xs-4 col-md-2">
 				<a href="{{ url_for('static', filename='max.jpg') }}">
 					<img src="{{ url_for('static', filename='max.jpg') }}" alt="Max Fishelson" class="img-circle img-responsive">
 				</a>
-				<p class="p-center"><a href="mailto:MaxwellKF@aol.com">MaxwellKF@aol.com</a></p>
 			</div>
 		</div>
 	</div>

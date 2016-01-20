@@ -1,50 +1,162 @@
 {% extends 'adminbase.html' %}
 
 {% block content %}
+<p>
+	Generate random data for testing the various functions of Administrator Tools.
+	Names are created by default, and several additional options may be selected.
+</p>
 <form class="form-horizontal" role="form">
 	<div class="form-group">
 		<label for="filetype" class="col-sm-3 col-md-4 control-label">Filetype</label>
-		<div class="col-sm-9 col-md-6">
+		<div class="col-sm-9 col-md-5">
 			<select id="filetype" class="form-control">
 				<option>CSV</option>
 				<option>XLS</option>
 			</select>
 		</div>
 	</div>
-	<div class="form-group">
-		<label for="numStudents" class="col-sm-3 col-md-4 control-label">Number of Students</label>
-		<div class="col-sm-9 col-md-6">
-			<input class="form-control" id="numStudents" type="number" min="0" max="10000" step="100" value="3000">
+	<div class="form-group" id="numStudentsGroup">
+		<label for="numStudents" class="col-sm-3 col-md-4 control-label">Number of People</label>
+		<div class="col-sm-9 col-md-5" id="numStudentsCont">
+			<input class="form-control" id="numStudents" data-toggle="tooltip"
+			title="Please use a positive integer less than 100000."
+			type="number" min="1" max="100000" step="100" value="3000">
 		</div>
 	</div>
 	<div class="form-group">
-		<label class="col-sm-3 col-md-4 control-label">Student Data</label>
+		<label class="col-sm-3 col-md-4 control-label">Optional Data</label>
 		<div class="col-sm-9 col-md-6">
-			<label class="checkbox-inline"><input type="checkbox" value="">ID</label>
-			<label class="checkbox-inline"><input type="checkbox" value="">Grade</label>
-			<label class="checkbox-inline"><input type="checkbox" value="">Email</label>
-			<label class="checkbox-inline"><input type="checkbox" value="">Phone</label>
-			<label class="checkbox-inline"><input type="checkbox" value="">Address</label>
-			<label class="checkbox-inline"><input type="checkbox" value="">Date of Birth</label>
+			<label class="checkbox-inline"><input type="checkbox">ID</label>
+			<label class="checkbox-inline"><input type="checkbox">Grade</label>
+			<label class="checkbox-inline"><input type="checkbox">Email</label>
+			<label class="checkbox-inline"><input type="checkbox">Phone</label>
+			<label class="checkbox-inline"><input type="checkbox">Address</label>
+			<label class="checkbox-inline"><input type="checkbox">Date of Birth</label>
 		</div>
 	</div>
-	<div class="col-sm-3 col-md-4">
-		<button type="button" class="btn btn-default pull-right" data-toggle="collapse" data-target="#moreOptions">
-			More Options
-		</button>
-	</div>
-	<div id="moreOptions" class="collapse">
-		<div class="form-group">
-			<label for="missingData" class="col-sm-3 col-md-4 control-label">Missing Data (Percent)</label>
-			<div class="col-sm-9 col-md-6">
-				<input class="form-control" id="missingData" type="number" min="0" max="50" value="0">
+	<div class="form-group">
+		<label class="col-sm-3 col-md-4 control-label">Delete Random Entries</label>
+		<div class="col-sm-1 col-md-1">
+			<div class="radio">
+				<label><input type="radio" name="delEnt" id="yes">Yes</label>
 			</div>
+			<div class="radio">
+				<label><input type="radio" name="delEnt" id="no" checked>No</label>
+			</div>
+		</div>
+		<div class="col-sm-8 col-md-4 collapse" id="delEnt">
+			<input class="form-control" type="range" id="prob" min="0" max="1" value="0" step="0.01">
+			<span class="col-sm-12 text-center" id="probAddon">0% Probability of Deletion</span>
 		</div>
 	</div>
 	<div class="form-group">
 		<div class="col-sm-offset-3 col-sm-9 col-md-offset-4 col-md-3">
-			<button type="submit" class="btn btn-default">Create</button>
+			<button type="submit" class="btn btn-default" id="submit">Create</button>
 		</div>
 	</div>
 </form>
+
+<form class="form-horizontal" role="form">
+	<div class="form-group">
+		<label class="col-sm-2 control-label">Focused</label>
+		<div class="col-sm-10">
+			<input class="form-control" id="focusedInput" type="text" value="Click to focus...">
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="inputPassword" class="col-sm-2 control-label">Disabled</label>
+		<div class="col-sm-10">
+			<input class="form-control" id="disabledInput" type="text" placeholder="Disabled input here..." disabled>
+		</div>
+	</div>
+	<fieldset disabled>
+		<div class="form-group">
+			<label for="disabledTextInput" class="col-sm-2 control-label">Disabled input and select list (Fieldset disabled)</label>
+			<div class="col-sm-10">
+				<input type="text" id="disabledTextInput" class="form-control" placeholder="Disabled input">
+			</div>
+		</div>
+
+	</fieldset>
+	<div class="form-group has-success has-feedback">
+		<label class="col-sm-2 control-label" for="inputSuccess">Input with success and glyphicon</label>
+		<div class="col-sm-10">
+			<input type="text" class="form-control" id="inputSuccess">
+			<span class="glyphicon glyphicon-ok form-control-feedback"></span>
+		</div>
+	</div>
+	<div class="form-group has-warning has-feedback">
+		<label class="col-sm-2 control-label" for="inputWarning">Input with warning and glyphicon</label>
+		<div class="col-sm-10">
+			<input type="text" class="form-control" id="inputWarning">
+			<span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
+		</div>
+	</div>
+	<div class="form-group has-error has-feedback">
+		<label class="col-sm-2 control-label" for="inputError">Input with error and glyphicon</label>
+		<div class="col-sm-10">
+			<input type="text" class="form-control" id="inputError">
+			<span class="glyphicon glyphicon-remove form-control-feedback"></span>
+		</div>
+	</div>
+</form>
+
+<script type="text/javascript">
+	var yes = document.getElementById('yes');
+	var no = document.getElementById('no');
+	var delEnt = $(document.getElementById('delEnt'));
+	var prob = document.getElementById('prob');
+	var probAddon = document.getElementById('probAddon');
+	var numStudents = document.getElementById('numStudents');
+	var numStudentsGroup = $(document.getElementById('numStudentsGroup'));
+	var numStudentsCont = $(document.getElementById('numStudentsCont'));
+	var submit = document.getElementById('submit');
+
+	$(yes).on('change', function() {
+		if (this.checked) {
+			delEnt.collapse('show');
+			no.disabled = true;
+			delEnt.on('shown.bs.collapse', function() {
+				no.disabled = false;
+			});
+		}
+	});
+
+	$(no).on('change', function() {
+		if (this.checked) {
+			delEnt.collapse('hide');
+			yes.disabled = true;
+			delEnt.on('hidden.bs.collapse', function() {
+				yes.disabled = false;
+			});
+		}
+	});
+
+	$(prob).on('input', function() {
+		probAddon.innerHTML = parseInt(100 * prob.value) + '% Probability of Deletion';
+	});
+
+	var hasError = false;
+	$(numStudents).on('input', function() {
+		n = numStudents.value
+		if (n >>> 0 !== parseFloat(n) || parseInt(n) > parseInt(numStudents.max) || parseInt(n) == 0) {
+			if (!hasError) {
+				numStudentsGroup.addClass('has-error has-feedback');
+				numStudentsCont.append(
+					'<span class="glyphicon glyphicon-remove form-control-feedback"></span>'
+					);
+				$(numStudents).tooltip('enable');
+				submit.disabled = true;
+				hasError = true;
+			}
+		}
+		else if (hasError) {
+			numStudentsGroup.removeClass('has-error has-feedback');
+			numStudentsCont.find('span').remove();
+			$(numStudents).tooltip('disable');
+			submit.disabled = false;
+			hasError = false;
+		}
+	});
+</script>
 {% endblock %}

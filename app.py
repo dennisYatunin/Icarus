@@ -11,11 +11,11 @@ def home():
 def admintools():
 	return render_template('adminhome.html')
 
-@app.route('/datagenerate')
+@app.route('/admintools/datagenerate')
 def datagenerate():
 	return render_template('datagenerate.html')
 
 if __name__ == "__main__":
 	app.debug = True
 	app.secret_key = urandom(24)
-	app.run(host="0.0.0.0", port=8000, threading=True)
+	app.run(host="0.0.0.0", port=8000, threaded=True)
