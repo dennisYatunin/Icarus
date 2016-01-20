@@ -2,8 +2,10 @@
 
 {% block content %}
 <p>
-	Generate random data for testing the various functions of Administrator Tools.
-	Names are created by default, and several additional options may be selected.
+	This tool allows you to generate random data for testing the various functions of Administrator Tools.
+	Every data file will include a column for names, and several other columns may be added.
+	Deleting random entries will result any cell of an optional column having a certain probability of being empty
+	(similarly to how real databases often have missing information).
 </p>
 <form class="form-horizontal" role="form">
 	<div class="form-group">
@@ -20,7 +22,7 @@
 		<div class="col-sm-9 col-md-5" id="numStudentsCont">
 			<input class="form-control" id="numStudents" data-toggle="tooltip"
 			title="Please use a positive integer less than 100000."
-			type="number" min="1" max="100000" step="100" value="3000">
+			type="number" min="0" max="100000" step="1000" value="3000">
 		</div>
 	</div>
 	<div class="form-group">
@@ -52,51 +54,6 @@
 	<div class="form-group">
 		<div class="col-sm-offset-3 col-sm-9 col-md-offset-4 col-md-3">
 			<button type="submit" class="btn btn-default" id="submit">Create</button>
-		</div>
-	</div>
-</form>
-
-<form class="form-horizontal" role="form">
-	<div class="form-group">
-		<label class="col-sm-2 control-label">Focused</label>
-		<div class="col-sm-10">
-			<input class="form-control" id="focusedInput" type="text" value="Click to focus...">
-		</div>
-	</div>
-	<div class="form-group">
-		<label for="inputPassword" class="col-sm-2 control-label">Disabled</label>
-		<div class="col-sm-10">
-			<input class="form-control" id="disabledInput" type="text" placeholder="Disabled input here..." disabled>
-		</div>
-	</div>
-	<fieldset disabled>
-		<div class="form-group">
-			<label for="disabledTextInput" class="col-sm-2 control-label">Disabled input and select list (Fieldset disabled)</label>
-			<div class="col-sm-10">
-				<input type="text" id="disabledTextInput" class="form-control" placeholder="Disabled input">
-			</div>
-		</div>
-
-	</fieldset>
-	<div class="form-group has-success has-feedback">
-		<label class="col-sm-2 control-label" for="inputSuccess">Input with success and glyphicon</label>
-		<div class="col-sm-10">
-			<input type="text" class="form-control" id="inputSuccess">
-			<span class="glyphicon glyphicon-ok form-control-feedback"></span>
-		</div>
-	</div>
-	<div class="form-group has-warning has-feedback">
-		<label class="col-sm-2 control-label" for="inputWarning">Input with warning and glyphicon</label>
-		<div class="col-sm-10">
-			<input type="text" class="form-control" id="inputWarning">
-			<span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
-		</div>
-	</div>
-	<div class="form-group has-error has-feedback">
-		<label class="col-sm-2 control-label" for="inputError">Input with error and glyphicon</label>
-		<div class="col-sm-10">
-			<input type="text" class="form-control" id="inputError">
-			<span class="glyphicon glyphicon-remove form-control-feedback"></span>
 		</div>
 	</div>
 </form>
