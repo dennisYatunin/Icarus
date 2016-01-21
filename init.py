@@ -19,7 +19,7 @@ if alreadyDone == False:
         q = 'CREATE TABLE students \
 	( \
 		id TEXT, email TEXT, name TEXT, salt INT, hash_value INT, \
-		dob TEXT, address TEXT, city TEXT, zip TEXT, phone TEXT, \
+		dob TEXT, address TEXT, phone TEXT, \
 		cursched TEXT, pastscheds TEXT \
 		)'
         c.execute(q)
@@ -28,7 +28,7 @@ if alreadyDone == False:
         q = 'CREATE TABLE faculty \
 	( \
 		id TEXT, email TEXT, name TEXT, salt INT, hash_value INT, permissions INT\
-		dob TEXT, address TEXT, city TEXT, zip TEXT, phone TEXT, \
+		dob TEXT, address TEXT, phone TEXT, \
 		cursched TEXT, pastscheds TEXT \
 		)'
         c.execute(q)
@@ -56,7 +56,7 @@ if alreadyDone == False:
                 #print line 
                 studentArray.append(line)
         
-        c.executemany('INSERT INTO students (id, email, name, salt, hash_value, dob, address, city, zip, phone, cursched, pastscheds) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', studentArray  )
+        c.executemany('INSERT INTO students (id, email, name, salt, hash_value, dob, address, phone, cursched, pastscheds) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', studentArray  )
 
         q = "Select * from students"
         #for row in c.execute(q):
@@ -80,7 +80,7 @@ if alreadyDone == False:
                 #print line
                 facultyArray.append(line)
         
-        c.executemany('INSERT INTO faculty (id, email, name, permissions, salt, hash_value, address, city, zip, phone, cursched, pastscheds) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', facultyArray  )
+        c.executemany('INSERT INTO faculty (id, email, name, permissions, salt, hash_value, address, phone, cursched, pastscheds) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', facultyArray  )
         print "entered the faculty"
 
         q = "Select * from faculty"
