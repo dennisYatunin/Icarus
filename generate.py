@@ -1,55 +1,75 @@
 from random import choice, random, randint
+from string import ascii_lowercase
 
-def csv(numPeople, hasID, hasEmail, hasDOB, hasAddress, hasPhone, missingData, probDeletion):
-	f = open('/static/firstNames.txt', 'r')
-	firstNames = f.readlines()
+def randCSV(numPeople, hasID, hasGrade, hasEmail, hasDOB, hasAddress, hasPhone, deleteEntries, probDeletion):
+	f = open('./static/firstNames.txt', 'r')
+	firstNames = f.read().splitlines()
 	f.close()
-	f = open('/static/lastNames.txt', 'r')
-	lastNames = f.readlines()
+	f = open('./static/lastNames.txt', 'r')
+	lastNames = f.read().splitlines()
 	f.close()
-	f = open('/static/streetSuffixes.txt', 'r')
-	streetSuffixes = f.readlines()
+	f = open('./static/streetSuffixes.txt', 'r')
+	streetSuffixes = f.read().splitlines()
 	f.close()
-	f = open('/static/cities.txt', 'r')
-	cities = f.readlines()
+	f = open('./static/cities.txt', 'r')
+	cities = f.read().splitlines()
 	f.close()
-	f = open('/static/states.txt', 'r')
-	states = f.readlines()
+	f = open('./static/states.txt', 'r')
+	states = f.read().splitlines()
 	f.close()
 	domains = ['aol.com', 'gmail.com', 'hotmail.com', 'mail.com' , 'mail.kz', 'yahoo.com']
-	data = [None] * numPeople
-
+	s = ''
+	if hasID:
+		s += 'id, '
+	s += 'name, '
+	if hasGrade:
+		s += 'grade, '
+	if hasEmail:
+		s += 'email, '
+	if hasDOB:
+		s += 'dob, '
+	if hasAddress:
+		s += 'address, '
+	if hasPhone:
+		s += 'phone, '
+	s = s[:-2]
+	s += '\n'
 	for i in range(numPeople):
 		if hasID:
-			data[i] = str(i) + ', '
-		data[i] += choice(firstNames) + ' ' + choice(lastNames) + ', '
+			s += str(i) + ', '
+		s += choice(firstNames) + ' ' + choice(lastNames) + ', '
+		if hasGrade:
+			if not deleteEntries or random() > probDeletion:
+				s += str(randint(9, 12))
+			s += ', '
 		if hasEmail:
-			if not missingData or random() < probDeletion:
+			if not deleteEntries or random() > probDeletion:
 				# random string of 7 to 10 lowercase letters, followed by email domain
-				data[i] +=
-				''.join(choice(string.ascii_lowercase) for i in range(randint(7, 14))) +
-				'@' + choice(domains)
-			data[i] += ', '
+				s += \
+					''.join(choice(ascii_lowercase) for i in range(randint(7, 14))) + \
+					'@' + choice(domains)
+			s += ', '
 		if hasDOB:
-			if not missingData or random() < probDeletion:
-				data[i] += str(randint(1, 12)) + '/' + str(randint(1, 28)) + '/' +
-				str(randint(1995, 2010))
-			data[i] += ', '
+			if not deleteEntries or random() > probDeletion:
+				s += str(randint(1, 12)) + '/' + str(randint(1, 28)) + '/' + \
+					str(randint(1998, 2001))
+			s += ', '
 		if hasAddress:
-			if not missingData or random() < probDeletion:
+			if not deleteEntries or random() > probDeletion:
 				# street address, city, state, zip
-				data[i] += str(randint(1, 9999)) + choice(lastNames) + choice(streetSuffixes) + ' ' +
-				choice(cities) + ' ' + choice(states) + ' ' + str(randint(3000, 99999)) + ', '
-			else:
-				data[i] += ', '
+				s += str(randint(1, 9999)) + ' ' + choice(lastNames) + ' ' + choice(streetSuffixes) + ' ' + \
+					choice(cities) + ' ' + choice(states) + ' ' + str(randint(3000, 99999))
+			s += ', '
 		if hasPhone:
-			if not missingData or random() < probDeletion:
+			if not deleteEntries or random() > probDeletion:
 				# random phone number such that area code doesn't start with a zero,
 				# none of the middle three digits are a 9, middle three digits aren't 000,
 				# and last 4 digits aren't all be the same
 				n = '0000000000'
 				while '9' in n[3:6] or n[3:6]=='000' or n[6]==n[7]==n[8]==n[9]:
 					n = str(randint(10**9, 10**10-1))
-				data[i] += n[:3] + '-' + n[3:6] + '-' + n[6:]
-			data[i] += ', '
-		data[i] = data[i][:-2]
+				s += n[:3] + '-' + n[3:6] + '-' + n[6:]
+			s += ', '
+		s = s[:-2]
+		s += '\n'
+	return s[:-1]

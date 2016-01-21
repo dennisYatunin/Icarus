@@ -1,0 +1,109 @@
+{% extends 'adminbase.html' %}
+
+{% block navigation %}
+<li><a href="/admintools">Home</a></li>
+<li><a href="/admintools/datagenerate">Data Generate</a></li>
+<li class="active"><a href="/admintools/dataimport">Data Import</a></li>
+{% endblock %}
+
+{% block content %}
+<style type="text/css">
+	.btn-file {
+		position: relative;
+		overflow: hidden;
+	}
+	.btn-file input[type=file] {
+		position: absolute;
+		top: 0;
+		right: 0;
+		min-width: 100%;
+		min-height: 100%;
+		font-size: 100px;
+		text-align: right;
+		filter: alpha(opacity=0);
+		opacity: 0;
+		background: white;
+		cursor: inherit;
+		display: block;
+	}
+	input[readonly] {
+		background-color: white !important;
+		cursor: text !important;
+	}
+</style>
+<p>
+	Upload stuff weee!
+</p>
+<form class="form-horizontal" role="form">
+	<div class="form-group">
+		<label for="filetype" class="col-sm-3 col-md-4 control-label">Filetype</label>
+		<div class="col-sm-9 col-md-5">
+			<select id="filetype" class="form-control" name="filetype">
+				<option>CSV</option>
+			</select>
+		</div>
+	</div>
+	<div class="form-group" id="fileGroup">
+		<label class="col-sm-3 col-md-4 control-label">Upload File</label>
+		<div class="col-sm-9 col-md-5" id="fileCont" data-toggle="tooltip" title="Please upload a '.csv' file.">
+			<div class="input-group">
+				<span class="input-group-btn">
+					<span class="btn btn-primary btn-file">
+						Browse&hellip; <input type="file" id="file" accept=".csv">
+					</span>
+				</span>
+				<input type="text" class="form-control" id="fileAddon" readonly>
+			</div>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="category" class="col-sm-3 col-md-4 control-label">Data Category</label>
+		<div class="col-sm-9 col-md-5">
+			<select id="category" class="form-control" name="category">
+				<option>Students</option>
+				<option>Faculty</option>
+				<option>Courses</option>
+			</select>
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="col-sm-offset-3 col-sm-9 col-md-offset-4 col-md-3">
+			<button type="button" class="btn btn-default" id="submit" disabled>Submit</button>
+		</div>
+	</div>
+</form>
+
+<script type="text/javascript">
+	var file = document.getElementById('file'),
+	fileAddon = document.getElementById('fileAddon'),
+	fileGroup = $(document.getElementById('fileGroup')),
+	fileCont = $(document.getElementById('fileCont')),
+	submit = document.getElementById('submit');
+
+	var hasError = false;
+	$(file).on('change', function() {
+		fileAddon.value = file.value.replace(/\\/g, '/').replace(/.*\//, '');
+		if (fileAddon.value.match(/\.[0-9a-z]+$/i) != '.csv') {
+			if (!hasError) {
+				fileGroup.addClass('has-error has-feedback');
+				fileCont.append(
+					'<span class="glyphicon glyphicon-remove form-control-feedback"></span>'
+					);
+				fileCont.tooltip('enable');
+				submit.disabled = true;
+				hasError = true;
+			}
+		}
+		else if (hasError) {
+			fileGroup.removeClass('has-error has-feedback');
+			fileCont.find('.glyphicon').remove();
+			fileCont.tooltip('disable');
+			submit.disabled = false;
+			hasError = false;
+		}
+		else {
+			submit.disabled = false;
+		}
+	});
+</script>
+{% endblock %}

@@ -1,5 +1,11 @@
 {% extends 'adminbase.html' %}
 
+{% block navigation %}
+<li><a href="/admintools">Home</a></li>
+<li class="active"><a href="/admintools/datagenerate">Data Generate</a></li>
+<li><a href="/admintools/dataimport">Data Import</a></li>
+{% endblock %}
+
 {% block content %}
 <p>
 	This tool allows you to generate random data for testing the various functions of Administrator Tools.
@@ -16,12 +22,12 @@
 			</select>
 		</div>
 	</div>
-	<div class="form-group" id="numStudentsGroup">
-		<label for="numStudents" class="col-sm-3 col-md-4 control-label">Number of People</label>
-		<div class="col-sm-9 col-md-5" id="numStudentsCont">
-			<input class="form-control" id="numStudents" name="numStudents" data-toggle="tooltip"
-			title="Please use a positive integer less than 100000."
-			type="number" min="0" max="100000" step="1000" value="3000">
+	<div class="form-group" id="numPeopleGroup">
+		<label for="numPeople" class="col-sm-3 col-md-4 control-label">Number of People</label>
+		<div class="col-sm-9 col-md-5" id="numPeopleCont">
+			<input class="form-control" id="numPeople" name="numPeople" data-toggle="tooltip"
+			title="Please use a positive integer no greater than 10000."
+			type="number" min="0" max="10000" step="1000" value="3000">
 		</div>
 	</div>
 	<div class="form-group">
@@ -39,40 +45,51 @@
 		<label class="col-sm-3 col-md-4 control-label">Delete Random Entries</label>
 		<div class="col-sm-1 col-md-1">
 			<div class="radio">
-				<label><input type="radio" name="delEnt" id="yes">Yes</label>
+				<label><input type="radio" name="delEntries" id="yes" value="yes">Yes</label>
 			</div>
 			<div class="radio">
-				<label><input type="radio" name="delEnt" id="no" checked>No</label>
+				<label><input type="radio" name="delEntries" id="no" value="no" checked>No</label>
 			</div>
 		</div>
-		<div class="col-sm-8 col-md-4 collapse" id="delEnt">
-			<input class="form-control" type="range" id="prob" min="0" max="1" value="0" step="0.01">
-			<span class="col-sm-12 text-center" id="probAddon">0% Probability of Deletion</span>
+		<div class="col-sm-8 col-md-4 collapse" id="delEntries">
+			<input class="form-control" type="range" name="prob" id="prob" min="0" max="1" value="0" step="0.01">
+			<span class="col-sm-12 text-center" id="probSpan">0% Probability of Deletion</span>
 		</div>
 	</div>
 	<div class="form-group">
 		<div class="col-sm-offset-3 col-sm-9 col-md-offset-4 col-md-3">
-			<button type="submit" class="btn btn-default" id="submit" onclick="generate()">Create</button>
+			<button type="button" class="btn btn-default" id="create">Create</button>
 		</div>
 	</div>
 </form>
 
 <script type="text/javascript">
-	var yes = document.getElementById('yes');
-	var no = document.getElementById('no');
-	var delEnt = $(document.getElementById('delEnt'));
-	var prob = document.getElementById('prob');
-	var probAddon = document.getElementById('probAddon');
-	var numStudents = document.getElementById('numStudents');
-	var numStudentsGroup = $(document.getElementById('numStudentsGroup'));
-	var numStudentsCont = $(document.getElementById('numStudentsCont'));
-	var submit = document.getElementById('submit');
+	var yes = document.getElementById('yes'),
+	no = document.getElementById('no'),
+	delEntries = $(document.getElementById('delEntries')),
+	prob = document.getElementById('prob'),
+	probSpan = document.getElementById('probSpan'),
+	numPeople = document.getElementById('numPeople'),
+	numPeopleGroup = $(document.getElementById('numPeopleGroup')),
+	numPeopleCont = $(document.getElementById('numPeopleCont')),
+	create = document.getElementById('create');
 
 	$(yes).on('change', function() {
 		if (this.checked) {
-			delEnt.collapse('show');
+			delEntries.collapse('show');
 			no.disabled = true;
-			delEnt.on('shown.bs.collapse', function() {
+			delEntries.on('shown.bs.collapse', function() {
+				no.disabled = false;
+			});
+		}
+	});
+
+	// for when the page is loaded with 'yes' already selected
+	$(function() {
+		if (yes.checked) {
+			delEntries.collapse('show');
+			no.disabled = true;
+			delEntries.on('shown.bs.collapse', function() {
 				no.disabled = false;
 			});
 		}
@@ -80,53 +97,44 @@
 
 	$(no).on('change', function() {
 		if (this.checked) {
-			delEnt.collapse('hide');
+			delEntries.collapse('hide');
 			yes.disabled = true;
-			delEnt.on('hidden.bs.collapse', function() {
+			delEntries.on('hidden.bs.collapse', function() {
 				yes.disabled = false;
 			});
 		}
 	});
 
 	$(prob).on('input', function() {
-		probAddon.innerHTML = parseInt(100 * prob.value) + '% Probability of Deletion';
+		probSpan.innerHTML = parseInt(100 * prob.value) + '% Probability of Deletion';
 	});
 
 	var hasError = false;
-	$(numStudents).on('input', function() {
-		n = numStudents.value
-		if (n >>> 0 !== parseFloat(n) || parseInt(n) > parseInt(numStudents.max) || parseInt(n) == 0) {
+	$(numPeople).on('input', function() {
+		n = numPeople.value
+		// check if n is not a non-negative integer, greater than numPeople.max, or equal to 0
+		if (n >>> 0 !== parseFloat(n) || parseInt(n) > parseInt(numPeople.max) || parseInt(n) == 0) {
 			if (!hasError) {
-				numStudentsGroup.addClass('has-error has-feedback');
-				numStudentsCont.append(
+				numPeopleGroup.addClass('has-error has-feedback');
+				numPeopleCont.append(
 					'<span class="glyphicon glyphicon-remove form-control-feedback"></span>'
 					);
-				$(numStudents).tooltip('enable');
-				submit.disabled = true;
+				$(numPeople).tooltip('enable');
+				create.disabled = true;
 				hasError = true;
 			}
 		}
 		else if (hasError) {
-			numStudentsGroup.removeClass('has-error has-feedback');
-			numStudentsCont.find('span').remove();
-			$(numStudents).tooltip('disable');
-			submit.disabled = false;
+			numPeopleGroup.removeClass('has-error has-feedback');
+			numPeopleCont.find('.glyphicon').remove();
+			$(numPeople).tooltip('disable');
+			create.disabled = false;
 			hasError = false;
 		}
 	});
 
-	function generate() {
-		$.ajax({
-			url : "/download",
-			data: $('form').serialize(),
-			type: 'POST',
-			success: function(response) {
-				alert(response);
-			},
-			error: function(error) {
-				alert(error);
-			}
-		});
-	}
+	$(create).click(function() {
+		window.location = '/download?' + $('form').serialize();
+	});
 </script>
 {% endblock %}
