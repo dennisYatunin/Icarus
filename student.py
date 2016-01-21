@@ -5,6 +5,11 @@ from uuid import uuid4
 conn = sqlite.connect('data.db')
 c = conn.cursor()
 
+"""id TEXT, email TEXT, name TEXT, salt INT, hash_value INT, \
+dob TEXT, address TEXT, city TEXT, zip TEXT, phone TEXT, \
+cursched TEXT, pastscheds TEXT \
+)'"""
+
 def getCurrSched(studentId):
     """
     Input: studentId - int of id of student
@@ -38,3 +43,28 @@ def getAddress(studentId):
     for result in c.execute(q, studentId):
         addr += result
     return addr
+
+
+def getTranscript(studentId):
+    """input int of student id
+    returns dict of all the courses and corresponding grades
+    """
+    allGrades = getCurrGrades(studentId)#import curr year first
+    q = "select pastsched from students where id = (?)"
+    oldYears = c.execute(q, (studentId))[0].split("|")
+    oldClasses = []
+    for year in oldYears:
+        year = year.split(";")
+        for section in year:
+            oldClasses.append(section)
+    for section in oldClasses:
+        q = "select grade from " + course_code + " where studentid = (?)"
+        grade = c.execute(q, (studentId))[0]
+        allGrades[course_code] = grade
+    return allGrades
+
+
+                
+    
+    
+    
