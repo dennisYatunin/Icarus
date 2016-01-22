@@ -1,55 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<title>Project Icarus</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-	<link rel="icon" href="{{ url_for('static', filename='icon.png') }}" type="image/png">
-	<style>
-		.jumbotron {
-			background-color: #000000;
-			color: #fff;
-			padding: 100px 25px;
-		}
-		.container-fluid {
-			padding: 60px 50px;
-		}
-	</style>
-</head>
-<body>
-	<div class="jumbotron text-center">
-		<h1>Icarus Scientific Software</h1>
-		<p>Like Daedalus, but Better</p>
-	</div>
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-xs-4 col-md-offset-3 col-md-2">
-				<a href="{{ url_for('static', filename='loren.jpg') }}">
-					<img src="{{ url_for('static', filename='loren.jpg') }}" alt="Loren Maggiore" class="img-circle img-responsive">
-				</a>
-			</div>
-			<div class="col-xs-4 col-md-2">
-				<a href="{{ url_for('static', filename='dennis.jpg') }}">
-					<img src="{{ url_for('static', filename='dennis.jpg') }}" alt="Dennis Yatunin" class="img-circle img-responsive">
-				</a>
-			</div>
-			<div class="col-xs-4 col-md-2">
-				<a href="{{ url_for('static', filename='max.jpg') }}">
-					<img src="{{ url_for('static', filename='max.jpg') }}" alt="Max Fishelson" class="img-circle img-responsive">
-				</a>
+	<head>
+		<title>Project Icarus</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+		<link rel="icon" href="{{ url_for('static', filename='icon.png') }}" type="image/png">
+		<style>
+			.jumbotron {
+				background-color: #000000;
+				color: #fff;
+				padding: 100px 25px;
+			}
+			.container-fluid {
+				padding: 60px 50px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="jumbotron text-center">
+			<h1>Icarus Scientific Software</h1>
+			<p>Like Daedalus, but Better</p>
+		</div>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xs-4 col-md-offset-3 col-md-2">
+					<a href="{{ url_for('static', filename='loren.jpg') }}">
+						<img src="{{ url_for('static', filename='loren.jpg') }}"
+						alt="Loren Maggiore" class="img-circle img-responsive">
+					</a>
+				</div>
+				<div class="col-xs-4 col-md-2">
+					<a href="{{ url_for('static', filename='dennis.jpg') }}">
+						<img src="{{ url_for('static', filename='dennis.jpg') }}"
+						alt="Dennis Yatunin" class="img-circle img-responsive">
+					</a>
+				</div>
+				<div class="col-xs-4 col-md-2">
+					<a href="{{ url_for('static', filename='max.jpg') }}">
+						<img src="{{ url_for('static', filename='max.jpg') }}"
+						alt="Max Fishelson" class="img-circle img-responsive">
+					</a>
+				</div>
 			</div>
 		</div>
-	</div>
-	<div class="container-fluid">
-		<div class="row">
-			<a href="/admintools"><button class="btn btn-default btn-lg">Administrator Tools</button></a>
-			<a href="/studenttools"><button class="btn btn-default btn-lg">Student Tools</button></a>
-			<a href="/facultytools"><button class="btn btn-default btn-lg">Faculty Tools</button></a>
+		<div class="container-fluid">
+			<div class="row">
+				<a href="/admintools"><button class="btn btn-default btn-lg">Administrator Tools</button></a>
+				<a href="/studenttools"><button class="btn btn-default btn-lg">Student Tools</button></a>
+				<a href="/facultytools"><button class="btn btn-default btn-lg">Faculty Tools</button></a>
+			</div>
 		</div>
-	</div>
-</body>
+	</body>
 </html>

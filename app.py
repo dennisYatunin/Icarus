@@ -1,5 +1,5 @@
 from flask import Flask, render_template, session, request, redirect, url_for, make_response
-from utils import get_secret_key, check_login_info
+from utils import get_secret_key, initialize_database, check_login_info
 from generate import randCSV
 
 app = Flask(__name__)
@@ -10,40 +10,40 @@ def home():
 
 @app.route('/admintools/login', methods=['GET', 'POST'])
 def adminlogin():
-	error = None
 	if request.method == 'POST':
-		if request.form['username'] != app.config['USERNAME']:
-			error = 'Invalid username'
-		elif request.form['password'] != app.config['PASSWORD']:
-			error = 'Invalid password'
-		else:
-			session['logged_in'] = True
-			flash('You were logged in')
-			return redirect(url_for('show_entries'))
-	return render_template('login.html', error=error)
+		if check_login_info(
+			request.form['username'],
+			request.form['password'],
+			'administrators'
+			):
+			session['admin_username'] = request.form['username']
+			return redirect(url_for('adminhome'))
+		return render_template('adminlogin.html', error=True)
+	return render_template('adminlogin.html')
 
 @app.route('/admintools/logout')
 def adminlogout():
 	session.pop('admin_username', None)
-	return redirect(url_for('/admintools/login'))
+	return redirect(url_for('adminlogin'))
 
 @app.route('/admintools')
-def admintools():
+@app.route('/admintools/home')
+def adminhome():
 	if 'admin_username' in session:
 		return render_template('adminhome.html')
-	return redirect(url_for('/admintools/login'))
+	return redirect(url_for('adminlogin'))
 
 @app.route('/admintools/datagenerate')
 def datagenerate():
 	if 'admin_username' in session:
 		return render_template('datagenerate.html')
-	return redirect(url_for('/admintools/login'))
+	return redirect(url_for('adminlogin'))
 
 @app.route('/admintools/dataimport')
 def dataimport():
 	if 'admin_username' in session:
 		return render_template('dataimport.html')
-	return redirect(url_for('/admintools/login'))
+	return redirect(url_for('adminlogin'))
 
 @app.route('/download')
 def download():
@@ -56,6 +56,7 @@ def download():
 	return response
 
 if __name__ == "__main__":
+	initialize_database()
 	app.debug = True
-	app.secret_key = urandom(24)
+	app.secret_key = get_secret_key()
 	app.run(host="0.0.0.0", port=8000, threaded=True)

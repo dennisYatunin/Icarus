@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>{% block title %} {% endblock %}</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+		<link rel="icon" href="{{ url_for('static', filename='icon.png') }}" type="image/png">
+		<style type="text/css">
+			.span-hand {
+				cursor: pointer;
+				cursor: hand;
+				color: #337ab7;
+			}
+			.panel-form {
+				margin-top: 50px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<div class="col-md-offset-3 col-md-6">
+				<div class="panel panel-default panel-form">
+					<div class="panel-heading">
+						<h3>
+							Welcome to <a href="/">{{ self.title() }}</a>
+							<span class="glyphicon glyphicon-lock pull-right"></span>
+						</h3>
+					</div>
+					<div class="panel-body">
+						{% if error %}
+						<div class="alert alert-danger fade in">
+							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+							Incorrect username or password.
+						</div>
+						{% endif %}
+						<form role="form" method="post">
+							<div class="form-group">
+								<label class="sr-only" for="username">Username</label>
+								<input type="text" name="username" placeholder="Username..." class="form-control" id="username">
+							</div>
+							<div class="form-group">
+								<label class="sr-only" for="password">Password</label>
+								<input type="password" name="password" placeholder="Password..." class="form-control" id="password">
+							</div>
+							<button type="submit" class="btn btn-default">Sign In</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<footer class="container-fluid text-center">
+			<p>
+				Copyright <sup>&copy;</sup> <span class="span-hand" id="toggle" onclick="playstop()">Icarus</span>
+				Scientific Software, 2015-2016. All rights reserved.
+			</p>
+		</footer>
+		<audio id="audio" src="{{ url_for('static', filename='Bastille_Icarus.mp3') }}" ></audio>
+		<script type="text/javascript">
+			var toggle = document.getElementById('toggle'),
+			audio = document.getElementById('audio');
+
+			function playstop() {
+				if (audio.paused) {
+					toggle.style.color = '#3c763d'; // same color as text-success
+					audio.play();
+				} else {
+					toggle.style.color = '#337ab7'; // same color as text-primary
+					audio.pause();
+				}
+			}
+
+			audio.addEventListener('ended', function() {
+				audio.currentTime = 0;
+				toggle.style.color = '#337ab7';
+			});
+		</script>
+	</body>
+</html>

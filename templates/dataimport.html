@@ -1,4 +1,8 @@
-{% extends 'adminbase.html' %}
+{% extends 'toolsbase.html' %}
+
+{% block title %}
+Administrator Tools
+{% endblock %}
 
 {% block navigation %}
 <li><a href="/admintools">Home</a></li>
@@ -60,10 +64,22 @@
 		<label for="category" class="col-sm-3 col-md-4 control-label">Data Category</label>
 		<div class="col-sm-9 col-md-5">
 			<select id="category" class="form-control" name="category">
+				<option selected></option>
 				<option>Students</option>
 				<option>Faculty</option>
 				<option>Courses</option>
 			</select>
+		</div>
+	</div>
+	<div class="form-group" id="studentoptions">
+		<label class="col-sm-3 col-md-4 control-label">Columns</label>
+		<div class="col-sm-9 col-md-6">
+			<label class="checkbox-inline"><input type="checkbox" name="id">ID</label>
+			<label class="checkbox-inline"><input type="checkbox" name="grade">Grade</label>
+			<label class="checkbox-inline"><input type="checkbox" name="email">Email</label>
+			<label class="checkbox-inline"><input type="checkbox" name="phone">Phone</label>
+			<label class="checkbox-inline"><input type="checkbox" name="address">Address</label>
+			<label class="checkbox-inline"><input type="checkbox" name="dob">Date of Birth</label>
 		</div>
 	</div>
 	<div class="form-group">
