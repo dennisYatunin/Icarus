@@ -6,7 +6,7 @@ conn = sqlite.connect('data.db')
 c = conn.cursor()
 
 """id TEXT, email TEXT, name TEXT, salt INT, hash_value INT, \
-dob TEXT, address TEXT, city TEXT, zip TEXT, phone TEXT, \
+dob TEXT, address TEXT, phone TEXT, \
 cursched TEXT, pastscheds TEXT \
 )'"""
 
@@ -38,7 +38,7 @@ def getAddress(studentId):
     """Input: studentid -- int
     Output : String of addr
     """
-    q = "select address, city, zip from students where id = (?)"
+    q = "select address from students where id = (?)"
     addr = ""
     for result in c.execute(q, studentId):
         addr += result
@@ -64,7 +64,36 @@ def getTranscript(studentId):
     return allGrades
 
 
-                
+def getEmail(studentId):
+    """input id 
+    get string email"""
+    q = "select email from students where id = (?)"
+    email = c.execute(q, studentId)[0]
+    return email
+
+def getAllEmails():
+    """Returns a list of all emails
+    for use when sending mass emails"""
+    q = "select email from students"
+    emailList = []
+    for email in c.execute(q):
+        emailList.append(email)
+    return emailList
+
+def getEmailsSection(sectionId):
+    q = "select students from (?) "
+    classEmails = []
+    for student in c.execute(q, sectionId):
+        classEmails.append(getEmail(student))
+    return classEmails
+
+
+def getPhone(studentId):
+    """input id
+    get back string phone num"""
+    q = "select phone from students where id = (?)"
+    phone = c.execute(q, studentId)[0]
+    return phone
     
     
     
