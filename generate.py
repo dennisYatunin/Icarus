@@ -2,19 +2,19 @@ from random import choice, random, randint
 from string import ascii_lowercase
 
 def randCSV(numPeople, hasID, hasGrade, hasEmail, hasDOB, hasAddress, hasPhone, deleteEntries, probDeletion):
-	f = open('./static/firstNames.txt', 'r')
+	f = open('./static/random/firstNames.txt', 'r')
 	firstNames = f.read().splitlines()
 	f.close()
-	f = open('./static/lastNames.txt', 'r')
+	f = open('./static/random/lastNames.txt', 'r')
 	lastNames = f.read().splitlines()
 	f.close()
-	f = open('./static/streetSuffixes.txt', 'r')
+	f = open('./static/random/streetSuffixes.txt', 'r')
 	streetSuffixes = f.read().splitlines()
 	f.close()
-	f = open('./static/cities.txt', 'r')
+	f = open('./static/random/cities.txt', 'r')
 	cities = f.read().splitlines()
 	f.close()
-	f = open('./static/states.txt', 'r')
+	f = open('./static/random/states.txt', 'r')
 	states = f.read().splitlines()
 	f.close()
 	domains = ['aol.com', 'gmail.com', 'hotmail.com', 'mail.com' , 'mail.kz', 'yahoo.com']

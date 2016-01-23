@@ -56,23 +56,82 @@ Administrator Tools
 		<label for="category" class="col-sm-3 col-md-4 control-label">Data Category</label>
 		<div class="col-sm-9 col-md-5">
 			<select id="category" class="form-control" name="category">
-				<option selected></option>
 				<option>Students</option>
 				<option>Teachers</option>
-				<option>Courses</option>
 			</select>
 		</div>
 	</div>
-	<div class="form-group" id="studentoptions">
-		<label class="col-sm-3 col-md-4 control-label">Columns</label>
-		<div class="col-sm-9 col-md-6">
-			<label class="checkbox-inline"><input type="checkbox" name="id">ID</label>
-			<label class="checkbox-inline"><input type="checkbox" name="grade">Grade</label>
-			<label class="checkbox-inline"><input type="checkbox" name="email">Email</label>
-			<label class="checkbox-inline"><input type="checkbox" name="phone">Phone</label>
-			<label class="checkbox-inline"><input type="checkbox" name="address">Address</label>
-			<label class="checkbox-inline"><input type="checkbox" name="dob">Date of Birth</label>
-			<label class="checkbox-inline"><input type="checkbox" name="schedule">Schedule</label>
+	<div class="form-group" id="numColumnsGroup">
+		<label for="numColumns" class="col-sm-3 col-md-4 control-label">Number of Columns</label>
+		<div class="col-sm-9 col-md-5" id="numColumnsCont">
+			<input class="form-control" id="numColumns" name="numColumns" data-toggle="tooltip"
+			title="Please use a positive integer less than 1000." type="number" min="1" max="1000" step="1" value="1">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 col-md-4 control-label">Column Order</label>
+		<div class="col-sm-2 control-label">ID</div>
+		<div class="col-sm-7 col-md-3">
+			<select class="form-control column-select" name="id">
+				<option>-</option>
+				<option>1</option>
+			</select>
+		</div>
+		<div class="col-sm-offset-3 col-sm-2 col-md-offset-4 control-label">Grade</div>
+		<div class="col-sm-7 col-md-3">
+			<select class="form-control column-select" name="grade">
+				<option>-</option>
+				<option>1</option>
+			</select>
+		</div>
+		<div class="col-sm-offset-3 col-sm-2 col-md-offset-4 control-label">Email</div>
+		<div class="col-sm-7 col-md-3">
+			<select class="form-control column-select" name="email">
+				<option>-</option>
+				<option>1</option>
+			</select>
+		</div>
+		<div class="col-sm-offset-3 col-sm-2 col-md-offset-4 control-label">Phone</div>
+		<div class="col-sm-7 col-md-3">
+			<select class="form-control column-select" name="phone">
+				<option>-</option>
+				<option>1</option>
+			</select>
+		</div>
+		<div class="col-sm-offset-3 col-sm-2 col-md-offset-4 control-label">Address</div>
+		<div class="col-sm-7 col-md-3">
+			<select class="form-control column-select" name="address">
+				<option>-</option>
+				<option>1</option>
+			</select>
+		</div>
+		<div class="col-sm-offset-3 col-sm-2 col-md-offset-4 control-label">Date of Birth</div>
+		<div class="col-sm-7 col-md-3">
+			<select class="form-control column-select" name="dob">
+				<option>-</option>
+				<option>1</option>
+			</select>
+		</div>
+		<div class="col-sm-offset-3 col-sm-2 col-md-offset-4 control-label">First Name</div>
+		<div class="col-sm-7 col-md-3">
+			<select class="form-control column-select" name="fname">
+				<option>-</option>
+				<option>1</option>
+			</select>
+		</div>
+		<div class="col-sm-offset-3 col-sm-2 col-md-offset-4 control-label">Last Name</div>
+		<div class="col-sm-7 col-md-3">
+			<select class="form-control column-select" name="lname">
+				<option>-</option>
+				<option>1</option>
+			</select>
+		</div>
+		<div class="col-sm-offset-3 col-sm-2 col-md-offset-4 control-label">Full Name</div>
+		<div class="col-sm-7 col-md-3">
+			<select class="form-control column-select" name="name">
+				<option>-</option>
+				<option>1</option>
+			</select>
 		</div>
 	</div>
 	<div class="form-group">
@@ -87,31 +146,66 @@ Administrator Tools
 	fileAddon = document.getElementById('fileAddon'),
 	fileGroup = $(document.getElementById('fileGroup')),
 	fileCont = $(document.getElementById('fileCont')),
+	numColumns = document.getElementById('numColumns'),
+	numColumnsGroup = $(document.getElementById('numColumnsGroup')),
+	numColumnsCont = $(document.getElementById('numColumnsCont')),
+	selects = $('select.column-select'),
 	submit = document.getElementById('submit');
 
-	var hasError = false;
+	var hasFileError = false;
 	$(file).on('change', function() {
 		fileAddon.value = file.value.replace(/\\/g, '/').replace(/.*\//, '');
 		if (fileAddon.value.match(/\.[0-9a-z]+$/i) != '.csv') {
-			if (!hasError) {
+			if (!hasFileError) {
 				fileGroup.addClass('has-error has-feedback');
 				fileCont.append(
 					'<span class="glyphicon glyphicon-remove form-control-feedback"></span>'
 					);
 				fileCont.tooltip('enable');
 				submit.disabled = true;
-				hasError = true;
+				hasFileError = true;
 			}
 		}
-		else if (hasError) {
+		else if (hasFileError) {
 			fileGroup.removeClass('has-error has-feedback');
 			fileCont.find('.glyphicon').remove();
 			fileCont.tooltip('disable');
 			submit.disabled = false;
-			hasError = false;
+			hasFileError = false;
 		}
 		else {
 			submit.disabled = false;
+		}
+	});
+
+	var hasNumberError = false;
+	$(numColumns).on('input', function() {
+		n = numColumns.value
+		// check if n is not a non-negative integer, greater than numColumns.max, or equal to 0
+		if (n >>> 0 !== parseFloat(n) || parseInt(n) > parseInt(numColumns.max) || parseInt(n) == 0) {
+			if (!hasNumberError) {
+				numColumnsGroup.addClass('has-error has-feedback');
+				numColumnsCont.append(
+					'<span class="glyphicon glyphicon-remove form-control-feedback"></span>'
+					);
+				$(numColumns).tooltip('enable');
+				submit.disabled = true;
+				hasNumberError = true;
+			}
+		}
+		else {
+			if (hasNumberError) {
+				numColumnsGroup.removeClass('has-error has-feedback');
+				numColumnsCont.find('.glyphicon').remove();
+				$(numColumns).tooltip('disable');
+				submit.disabled = false;
+				hasNumberError = false;
+			}
+			selects.empty(); // remove old options
+			selects.append('<option>-</option>');
+			for (var i = 1; i <= parseInt(n); i++) {
+				selects.append('<option>' + i + '</option>');
+			}
 		}
 	});
 </script>

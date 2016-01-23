@@ -89,15 +89,13 @@ Administrator Tools
 	});
 
 	// for when the page is loaded with 'yes' already selected
-	$(function() {
-		if (yes.checked) {
-			delEntries.collapse('show');
-			no.disabled = true;
-			delEntries.on('shown.bs.collapse', function() {
-				no.disabled = false;
-			});
-		}
-	});
+	if (yes.checked) {
+		delEntries.collapse('show');
+		no.disabled = true;
+		delEntries.on('shown.bs.collapse', function() {
+			no.disabled = false;
+		});
+	}
 
 	$(no).on('change', function() {
 		if (this.checked) {
