@@ -10,6 +10,11 @@ dob TEXT, address TEXT, phone TEXT, \
 cursched TEXT, pastscheds TEXT \
 )'"""
 
+def getName(studentId):
+	"""take in id, return name"""
+	q = "select name from students where id = ?"
+	return c.execute(q, (studentId))[0]
+
 def getCurrSched(studentId):
     """
     Input: studentId - int of id of student
@@ -29,7 +34,7 @@ def getCurrGrades(studentId):
     sched = getCurrSched(studentId)
     grades = {}
     for course_code in sched:
-        q = "select grade from " + course_code + " where studentid = (?)"
+        q = "select grade from " + course_code + " where id = (?)"
         grade = c.execute(q, (studentId))[0]
         grades[course_code] = grade
     return grades
@@ -58,7 +63,7 @@ def getTranscript(studentId):
         for section in year:
             oldClasses.append(section)
     for section in oldClasses:
-        q = "select grade from " + course_code + " where studentid = (?)"
+        q = "select grade from " + course_code + " where id = (?)"
         grade = c.execute(q, (studentId))[0]
         allGrades[course_code] = grade
     return allGrades
@@ -95,5 +100,15 @@ def getPhone(studentId):
     phone = c.execute(q, studentId)[0]
     return phone
     
+def getAllPhones():
+	"""
+	return list of strings of phone numbers"""
+	q = "select phone students"
+	nums = []
+	for phone in c.execute(q):
+		nums.append(phone)
+	return nums
+
+
     
     
