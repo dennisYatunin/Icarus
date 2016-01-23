@@ -39,20 +39,12 @@ Administrator Tools
 	Upload stuff weee!
 </p>
 <form class="form-horizontal" role="form">
-	<div class="form-group">
-		<label for="filetype" class="col-sm-3 col-md-4 control-label">Filetype</label>
-		<div class="col-sm-9 col-md-5">
-			<select id="filetype" class="form-control" name="filetype">
-				<option>CSV</option>
-			</select>
-		</div>
-	</div>
 	<div class="form-group" id="fileGroup">
 		<label class="col-sm-3 col-md-4 control-label">Upload File</label>
 		<div class="col-sm-9 col-md-5" id="fileCont" data-toggle="tooltip" title="Please upload a '.csv' file.">
 			<div class="input-group">
 				<span class="input-group-btn">
-					<span class="btn btn-primary btn-file">
+					<span class="btn btn-default btn-file">
 						Browse&hellip; <input type="file" id="file" accept=".csv">
 					</span>
 				</span>
@@ -66,7 +58,7 @@ Administrator Tools
 			<select id="category" class="form-control" name="category">
 				<option selected></option>
 				<option>Students</option>
-				<option>Faculty</option>
+				<option>Teachers</option>
 				<option>Courses</option>
 			</select>
 		</div>
@@ -80,6 +72,7 @@ Administrator Tools
 			<label class="checkbox-inline"><input type="checkbox" name="phone">Phone</label>
 			<label class="checkbox-inline"><input type="checkbox" name="address">Address</label>
 			<label class="checkbox-inline"><input type="checkbox" name="dob">Date of Birth</label>
+			<label class="checkbox-inline"><input type="checkbox" name="schedule">Schedule</label>
 		</div>
 	</div>
 	<div class="form-group">

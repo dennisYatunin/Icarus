@@ -30,19 +30,19 @@ def adminlogout():
 @app.route('/admintools/home')
 def adminhome():
 	if 'admin_username' in session:
-		return render_template('adminhome.html')
+		return render_template('adminhome.html', name=session['admin_username'])
 	return redirect(url_for('adminlogin'))
 
 @app.route('/admintools/datagenerate')
 def datagenerate():
 	if 'admin_username' in session:
-		return render_template('datagenerate.html')
+		return render_template('datagenerate.html', name=session['admin_username'])
 	return redirect(url_for('adminlogin'))
 
 @app.route('/admintools/dataimport')
 def dataimport():
 	if 'admin_username' in session:
-		return render_template('dataimport.html')
+		return render_template('dataimport.html', name=session['admin_username'])
 	return redirect(url_for('adminlogin'))
 
 @app.route('/download')
