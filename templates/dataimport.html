@@ -41,7 +41,8 @@ Administrator Tools
 <form class="form-horizontal" role="form">
 	<div class="form-group" id="fileGroup">
 		<label class="col-sm-3 col-md-4 control-label">Upload File</label>
-		<div class="col-sm-9 col-md-5" id="fileCont" data-toggle="tooltip" title="Please upload a '.csv' file.">
+		<div class="col-sm-9 col-md-5" id="fileDiv" data-toggle="tooltip"
+		title="Please upload a '.csv' file.">
 			<div class="input-group">
 				<span class="input-group-btn">
 					<span class="btn btn-default btn-file">
@@ -61,75 +62,85 @@ Administrator Tools
 			</select>
 		</div>
 	</div>
-	<div class="form-group" id="numColumnsGroup">
+	<div class="form-group">
 		<label for="numColumns" class="col-sm-3 col-md-4 control-label">Number of Columns</label>
-		<div class="col-sm-9 col-md-5" id="numColumnsCont">
+		<div class="col-sm-9 col-md-5">
 			<input class="form-control" id="numColumns" name="numColumns" data-toggle="tooltip"
-			title="Please use a positive integer less than 1000." type="number" min="1" max="1000" step="1" value="1">
+			title="Please use a positive integer less than 1000."
+			type="number" min="1" max="1000" step="1" value="1">
 		</div>
 	</div>
-	<div class="form-group">
+	<div class="form-group" id="selectsGroup">
 		<label class="col-sm-3 col-md-4 control-label">Column Order</label>
 		<div class="col-sm-2 control-label">ID</div>
 		<div class="col-sm-7 col-md-3">
-			<select class="form-control column-select" name="id">
-				<option>-</option>
-				<option>1</option>
-			</select>
-		</div>
-		<div class="col-sm-offset-3 col-sm-2 col-md-offset-4 control-label">Grade</div>
-		<div class="col-sm-7 col-md-3">
-			<select class="form-control column-select" name="grade">
-				<option>-</option>
-				<option>1</option>
-			</select>
-		</div>
-		<div class="col-sm-offset-3 col-sm-2 col-md-offset-4 control-label">Email</div>
-		<div class="col-sm-7 col-md-3">
-			<select class="form-control column-select" name="email">
-				<option>-</option>
-				<option>1</option>
-			</select>
-		</div>
-		<div class="col-sm-offset-3 col-sm-2 col-md-offset-4 control-label">Phone</div>
-		<div class="col-sm-7 col-md-3">
-			<select class="form-control column-select" name="phone">
-				<option>-</option>
-				<option>1</option>
-			</select>
-		</div>
-		<div class="col-sm-offset-3 col-sm-2 col-md-offset-4 control-label">Address</div>
-		<div class="col-sm-7 col-md-3">
-			<select class="form-control column-select" name="address">
-				<option>-</option>
-				<option>1</option>
-			</select>
-		</div>
-		<div class="col-sm-offset-3 col-sm-2 col-md-offset-4 control-label">Date of Birth</div>
-		<div class="col-sm-7 col-md-3">
-			<select class="form-control column-select" name="dob">
-				<option>-</option>
+			<select class="form-control column-select" name="id"
+			data-toggle="tooltip" title="Please do not use the same column more than once.">
+				<option></option>
 				<option>1</option>
 			</select>
 		</div>
 		<div class="col-sm-offset-3 col-sm-2 col-md-offset-4 control-label">First Name</div>
 		<div class="col-sm-7 col-md-3">
-			<select class="form-control column-select" name="fname">
-				<option>-</option>
+			<select class="form-control column-select" name="fname"
+			data-toggle="tooltip" title="Please do not use the same column more than once.">
+				<option></option>
 				<option>1</option>
 			</select>
 		</div>
 		<div class="col-sm-offset-3 col-sm-2 col-md-offset-4 control-label">Last Name</div>
 		<div class="col-sm-7 col-md-3">
-			<select class="form-control column-select" name="lname">
-				<option>-</option>
+			<select class="form-control column-select" name="lname"
+			data-toggle="tooltip" title="Please do not use the same column more than once.">
+				<option></option>
 				<option>1</option>
 			</select>
 		</div>
 		<div class="col-sm-offset-3 col-sm-2 col-md-offset-4 control-label">Full Name</div>
 		<div class="col-sm-7 col-md-3">
-			<select class="form-control column-select" name="name">
-				<option>-</option>
+			<select class="form-control column-select" name="name"
+			data-toggle="tooltip" title="Please do not use the same column more than once.">
+				<option></option>
+				<option>1</option>
+			</select>
+		</div>
+		<div class="col-sm-offset-3 col-sm-2 col-md-offset-4 control-label">Level</div>
+		<div class="col-sm-7 col-md-3">
+			<select class="form-control column-select" name="level"
+			data-toggle="tooltip" title="Please do not use the same column more than once.">
+				<option></option>
+				<option>1</option>
+			</select>
+		</div>
+		<div class="col-sm-offset-3 col-sm-2 col-md-offset-4 control-label">Email</div>
+		<div class="col-sm-7 col-md-3">
+			<select class="form-control column-select" name="email"
+			data-toggle="tooltip" title="Please do not use the same column more than once.">
+				<option></option>
+				<option>1</option>
+			</select>
+		</div>
+		<div class="col-sm-offset-3 col-sm-2 col-md-offset-4 control-label">Phone</div>
+		<div class="col-sm-7 col-md-3">
+			<select class="form-control column-select" name="phone"
+			data-toggle="tooltip" title="Please do not use the same column more than once.">
+				<option></option>
+				<option>1</option>
+			</select>
+		</div>
+		<div class="col-sm-offset-3 col-sm-2 col-md-offset-4 control-label">Address</div>
+		<div class="col-sm-7 col-md-3">
+			<select class="form-control column-select" name="address"
+			data-toggle="tooltip" title="Please do not use the same column more than once.">
+				<option></option>
+				<option>1</option>
+			</select>
+		</div>
+		<div class="col-sm-offset-3 col-sm-2 col-md-offset-4 control-label">Date of Birth</div>
+		<div class="col-sm-7 col-md-3">
+			<select class="form-control column-select" name="dob"
+			data-toggle="tooltip" title="Please do not use the same column more than once.">
+				<option></option>
 				<option>1</option>
 			</select>
 		</div>
@@ -142,50 +153,59 @@ Administrator Tools
 </form>
 
 <script type="text/javascript">
-	var file = document.getElementById('file'),
+	file = document.getElementById('file'),
 	fileAddon = document.getElementById('fileAddon'),
+	fileDiv = $(document.getElementById('fileDiv')),
 	fileGroup = $(document.getElementById('fileGroup')),
-	fileCont = $(document.getElementById('fileCont')),
 	numColumns = document.getElementById('numColumns'),
-	numColumnsGroup = $(document.getElementById('numColumnsGroup')),
-	numColumnsCont = $(document.getElementById('numColumnsCont')),
+	numColumnsDiv = $(numColumns.parentNode),
+	numColumnsGroup = $(numColumns.parentNode.parentNode),
 	selects = $('select.column-select'),
-	submit = document.getElementById('submit');
+	selectsGroup = $(document.getElementById('selectsGroup')),
+	submit = document.getElementById('submit'),
+	hasFileError = true,
+	hasNumberError = false,
+	numSelectErrors = 0,
+	selectsPerColumn = {},
+	columnPerSelect = {};
 
-	var hasFileError = false;
 	$(file).on('change', function() {
 		fileAddon.value = file.value.replace(/\\/g, '/').replace(/.*\//, '');
 		if (fileAddon.value.match(/\.[0-9a-z]+$/i) != '.csv') {
 			if (!hasFileError) {
 				fileGroup.addClass('has-error has-feedback');
-				fileCont.append(
+				fileDiv.append(
 					'<span class="glyphicon glyphicon-remove form-control-feedback"></span>'
 					);
-				fileCont.tooltip('enable');
+				fileDiv.tooltip('enable');
 				submit.disabled = true;
 				hasFileError = true;
 			}
 		}
-		else if (hasFileError) {
-			fileGroup.removeClass('has-error has-feedback');
-			fileCont.find('.glyphicon').remove();
-			fileCont.tooltip('disable');
-			submit.disabled = false;
-			hasFileError = false;
-		}
 		else {
-			submit.disabled = false;
+			if (hasFileError) {
+				fileGroup.removeClass('has-error has-feedback');
+				fileDiv.find('.glyphicon').remove();
+				fileDiv.tooltip('disable');
+				hasFileError = false;
+			}
+			if (!hasNumberError && numSelectErrors == 0) {
+				submit.disabled = false;
+			}
 		}
 	});
 
-	var hasNumberError = false;
 	$(numColumns).on('input', function() {
-		n = numColumns.value
+		var n = numColumns.value
 		// check if n is not a non-negative integer, greater than numColumns.max, or equal to 0
-		if (n >>> 0 !== parseFloat(n) || parseInt(n) > parseInt(numColumns.max) || parseInt(n) == 0) {
+		if (
+			n >>> 0 !== parseFloat(n) ||
+			parseInt(n) > parseInt(numColumns.max) ||
+			parseInt(n) == 0
+			) {
 			if (!hasNumberError) {
 				numColumnsGroup.addClass('has-error has-feedback');
-				numColumnsCont.append(
+				numColumnsDiv.append(
 					'<span class="glyphicon glyphicon-remove form-control-feedback"></span>'
 					);
 				$(numColumns).tooltip('enable');
@@ -196,17 +216,121 @@ Administrator Tools
 		else {
 			if (hasNumberError) {
 				numColumnsGroup.removeClass('has-error has-feedback');
-				numColumnsCont.find('.glyphicon').remove();
+				numColumnsDiv.find('.glyphicon').remove();
 				$(numColumns).tooltip('disable');
-				submit.disabled = false;
 				hasNumberError = false;
 			}
-			selects.empty(); // remove old options
-			selects.append('<option>-</option>');
+			selects.empty();
+			for (var listKey in selectsPerColumn) {
+				if (selectsPerColumn[listKey].length > 1) {
+					var list = selectsPerColumn[listKey];
+					for (var i = 0; i < list.length; i++) {
+						removeSelectError(document.getElementsByName(list[i])[0]);
+					}
+				}
+			}
+			selectsGroup.removeClass('has-error has-feedback');
+			selectsPerColumn = {};
+			columnPerSelect = {};
+			selects.append('<option></option>');
 			for (var i = 1; i <= parseInt(n); i++) {
 				selects.append('<option>' + i + '</option>');
 			}
+			if (!hasFileError) {
+				submit.disabled = false;
+			}
 		}
+	});
+
+	function addSelectError(select) {
+		$(select).parent().append(
+			'<span class="glyphicon glyphicon-remove form-control-feedback"></span>'
+			);
+		$(select).tooltip('enable');
+		numSelectErrors++;
+	}
+
+	function removeSelectError(select) {
+		$(select).parent().find('.glyphicon').remove();
+		$(select).tooltip('disable');
+		numSelectErrors--;
+	}
+
+	function checkIfNoMoreSelectErrors() {
+		if (numSelectErrors == 0) {
+			selectsGroup.removeClass('has-error has-feedback');
+			if (!hasFileError && !hasNumberError) {
+				submit.disabled = false;
+			}
+		}
+	}
+
+	selects.on('change', function() {
+		var wasError = false;
+		var list;
+		// if this select previously had a value
+		if (this.getAttribute('name') in columnPerSelect) {
+			list = selectsPerColumn[columnPerSelect[this.getAttribute('name')]];
+			list.splice(list.indexOf(this.getAttribute('name')), 1);
+			// if this select previously had an erroneous value
+			if (list.length > 0) {
+				wasError = true;
+				// if there were previously only two items in this list
+				if (list.length == 1) {
+					removeSelectError(document.getElementsByName(list[0])[0]);
+				}
+			}
+			else {
+				delete selectsPerColumn[columnPerSelect[this.getAttribute('name')]];
+			}
+		}
+		// if this select now does not have a value
+		if (this.value == '') {
+			delete columnPerSelect[this.getAttribute('name')];
+			if (wasError) {
+				removeSelectError(this);
+				checkIfNoMoreSelectErrors();
+			}
+		}
+		else {
+			columnPerSelect[this.getAttribute('name')] = this.value;
+			// if there was already a select with this column value
+			if (this.value in selectsPerColumn) {
+				list = selectsPerColumn[this.value];
+				// if there was only one other select with this value
+				if (list.length == 1) {
+					addSelectError(document.getElementsByName(list[0])[0]);
+					// if this is the first error on the page
+					if (numSelectErrors == 1) {
+						selectsGroup.addClass('has-error has-feedback');
+						submit.disabled = true;
+					}
+				}
+				list.push(this.getAttribute('name'));
+				addSelectError(this);
+			}
+			else {
+				selectsPerColumn[this.value] = [this.getAttribute('name')];
+				if (wasError) {
+					removeSelectError(this);
+					checkIfNoMoreSelectErrors();
+				}
+			}
+		}
+	});
+
+	$(submit).click(function() {
+		$.ajax({
+			url: '/upload',
+			data: $('form').serialize(),
+			type: 'POST',
+			success: function(response) {
+				alert(response);
+			},
+			error: function(error) {
+				alert(error);
+			}
+		});
 	});
 </script>
 {% endblock %}
