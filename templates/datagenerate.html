@@ -28,7 +28,7 @@ Administrator Tools
 	</div>
 	<div class="form-group" id="numPeopleGroup">
 		<label for="numPeople" class="col-sm-3 col-md-4 control-label">Number of People</label>
-		<div class="col-sm-9 col-md-5" id="numPeopleDiv">
+		<div class="col-sm-9 col-md-5" id="numPeopleCont">
 			<input class="form-control" id="numPeople" name="numPeople" data-toggle="tooltip"
 			title="Please use a positive integer no greater than 10000."
 			type="number" min="0" max="10000" step="1000" value="3000">
@@ -56,8 +56,7 @@ Administrator Tools
 			</div>
 		</div>
 		<div class="col-sm-8 col-md-4 collapse" id="delEntries">
-			<input class="form-control" type="range" name="prob" id="prob"
-			min="0" max="1" value="0" step="0.01">
+			<input class="form-control" type="range" name="prob" id="prob" min="0" max="1" value="0" step="0.01">
 			<span class="col-sm-12 text-center" id="probSpan">0% Probability of Deletion</span>
 		</div>
 	</div>
@@ -69,16 +68,15 @@ Administrator Tools
 </form>
 
 <script type="text/javascript">
-	yes = document.getElementById('yes'),
+	var yes = document.getElementById('yes'),
 	no = document.getElementById('no'),
 	delEntries = $(document.getElementById('delEntries')),
 	prob = document.getElementById('prob'),
 	probSpan = document.getElementById('probSpan'),
 	numPeople = document.getElementById('numPeople'),
-	numPeopleDiv = $(numPeople.parentNode),
-	numPeopleGroup = $(numPeople.parentNode.parentNode),
-	create = document.getElementById('create'),
-	hasError = false;
+	numPeopleGroup = $(document.getElementById('numPeopleGroup')),
+	numPeopleCont = $(document.getElementById('numPeopleCont')),
+	create = document.getElementById('create');
 
 	$(yes).on('change', function() {
 		if (this.checked) {
@@ -113,17 +111,14 @@ Administrator Tools
 		probSpan.innerHTML = parseInt(100 * prob.value) + '% Probability of Deletion';
 	});
 
+	var hasError = false;
 	$(numPeople).on('input', function() {
-		var n = numPeople.value
+		n = numPeople.value
 		// check if n is not a non-negative integer, greater than numPeople.max, or equal to 0
-		if (
-			n >>> 0 !== parseFloat(n) ||
-			parseInt(n) > parseInt(numPeople.max) ||
-			parseInt(n) == 0
-			) {
+		if (n >>> 0 !== parseFloat(n) || parseInt(n) > parseInt(numPeople.max) || parseInt(n) == 0) {
 			if (!hasError) {
 				numPeopleGroup.addClass('has-error has-feedback');
-				numPeopleDiv.append(
+				numPeopleCont.append(
 					'<span class="glyphicon glyphicon-remove form-control-feedback"></span>'
 					);
 				$(numPeople).tooltip('enable');
@@ -133,7 +128,7 @@ Administrator Tools
 		}
 		else if (hasError) {
 			numPeopleGroup.removeClass('has-error has-feedback');
-			numPeopleDiv.find('.glyphicon').remove();
+			numPeopleCont.find('.glyphicon').remove();
 			$(numPeople).tooltip('disable');
 			create.disabled = false;
 			hasError = false;
