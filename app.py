@@ -84,10 +84,14 @@ def upload():
 		d['dob'], d['name'], d['fname'], d['lname']
 		)))
 
+initialize_database()
+#app.debug = True
+app.secret_key = get_secret_key()
+#app.run(host="0.0.0.0", port = 8000, threaded=True)
 if __name__ == "__main__":
-	initialize_database()
+	#initialize_database()
 	app.debug = True
-	app.secret_key = get_secret_key()
+	#app.secret_key = get_secret_key()
 	# Users are not allowed to upload more than 20 MB of data.
 	app.config['MAX_CONTENT_LENGTH'] = 20 * 1024 * 1024
 	app.run(host="0.0.0.0", port=8000, threaded=True)
