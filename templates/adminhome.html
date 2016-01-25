@@ -12,4 +12,80 @@ Administrator Tools
 
 {% block content %}
 <p> HEEEEYYYYY </p>
+<div class="row">
+	<div class="col-xs-offset-1 col-xs-10 col-sm-offset-3 col-sm-6 col-md-offset-4 col-md-4">
+		<button type="button" class="btn btn-primary btn-lg" id="students">Students</button>
+		<button type="button" class="btn btn-default btn-lg pull-right" id="teachers">Teachers</button>
+	</div>
+</div>
+<table class="table table-hover table-responsive">
+	<thead>
+		<tr>
+			<th>ID</th>
+			<th>Name</th>
+			<th>Email</th>
+			<th>Date of Birth</th>
+			<th>Address</th>
+			<th>Phone</th>
+			<th>Level</th>
+			<th>Current Schedule</th>
+			<th>Past Schedules</th>
+		</tr>
+	</thead>
+	<tbody id="table">
+	</tbody>
+</table>
+
+<script type="text/javascript">
+	students = $('#students'),
+	teachers = $('#teachers'),
+	current = students,
+	table = document.getElementById('table');
+
+	students.click(function() {
+		if (current == teachers) {
+			teachers.removeClass('btn-primary').addClass('btn-default');
+			students.removeClass('btn-default').addClass('btn-primary');
+			getTable('students');
+			current = students;
+		}
+	});
+	getTable('students');
+
+	teachers.click(function() {
+		if (current == students) {
+			students.removeClass('btn-primary').addClass('btn-default');
+			teachers.removeClass('btn-default').addClass('btn-primary');
+			getTable('teachers');
+			current = teachers;
+		}
+	});
+
+	function getTable(category) {
+		$.ajax({
+			dataType: 'json',
+			url: '/admintools/database',
+			data: {'category': category},
+			success: function(response) {
+				table.innerHTML = '';
+				$.each(response, function(key, val) {
+					table.innerHTML += '<tr>' +
+						'<td>' + val['id'] + '</td>' +
+						'<td>' + val['name'] + '</td>' +
+						'<td>' + val['email'] + '</td>' +
+						'<td>' + val['dob'] + '</td>' +
+						'<td>' + val['address'] + '</td>' +
+						'<td>' + val['phone'] + '</td>' +
+						'<td>' + val['level'] + '</td>' +
+						'<td>' + val['cursched'] + '</td>' +
+						'<td>' + val['pastscheds'] + '</td>' +
+						'</tr>';
+				});
+			},
+			error: function(responseText, statusText, xhr) {
+				console.log('OH NO' + responseText);
+			}
+		});
+	}
+</script>
 {% endblock %}

@@ -1,5 +1,6 @@
-from flask import Flask, render_template, session, request, redirect, url_for, make_response, json
-from utils import get_secret_key, initialize_database, check_login_info, randCSV, upload_data
+from flask import Flask, render_template, session, request, redirect, url_for, make_response
+from utils import get_secret_key, initialize_database, check_login_info
+from admin import get_table, randCSV, upload_data
 from json import dumps
 
 app = Flask(__name__)
@@ -51,6 +52,14 @@ def dataimport():
 			)
 	return redirect(url_for('adminlogin'))
 
+@app.route('/admintools/database')
+def database():
+	if 'admin_username' not in session:
+		return make_response(
+			'Error: must be logged in as administrator to access database.'
+			)
+	return dumps(get_table(request.args['category']))
+
 @app.route('/download')
 def download():
 	d = request.args
@@ -64,6 +73,10 @@ def download():
 
 @app.route('/upload', methods=['POST'])
 def upload():
+	if 'admin_username' not in session:
+		return make_response(
+			'Error: must be logged in as administrator to modify database.'
+			)
 	d = request.form
 	return make_response(str(upload_data(
 		request.files['file'], d['category'], d['numColumns'],
