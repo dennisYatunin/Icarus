@@ -28,8 +28,12 @@ def update_entry(
 	header = get_header(
 		True, name, level, email, dob, address, phone, hasNewline=False
 		)
-	q = 'REPLACE INTO %s (id, name, email, dob, address, ' % category + \
+	q = 'INSERT OR REPLACE INTO %s (id, name, email, dob, address, ' % category + \
 		'phone, level, cursched, pastscheds) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)'
+	print q
+	print tuple(value if value else None for value in [
+		idnum, name, email, dob, address, phone, level, cursched, pastscheds
+		])
 	c.execute(q, tuple(value if value else None for value in [
 		idnum, name, email, dob, address, phone, level, cursched, pastscheds
 		]))

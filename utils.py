@@ -36,9 +36,6 @@ def initialize_database():
 			level TEXT, cursched TEXT, pastscheds TEXT \
 			)'
 		c.execute(q)
-		q = 'INSERT INTO students (id, name, salt, hash_value, email, dob, ' + \
-			'address, phone, level, cursched, pastscheds) VALUES (?, ?, ?, ?, ?, ?, ? ,?, ?, ?, ?)'
-		c.execute(q, (1, 'Dennis Yatunin', '', sha512('').hexdigest(), 'dyatun@gmail.com', '06/19/98', '2121 Shore Pkwy.', '718-265-4895', '12', 'NOPE', 'NOPE'))
 		q = 'CREATE TABLE teachers \
 		( \
 			id TEXT UNIQUE, name TEXT, salt INT, hash_value INT, \

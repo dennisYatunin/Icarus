@@ -30,12 +30,17 @@ Administrator Tools
 		overflow: hidden;
 		text-overflow: ellipsis;
 	}
+	.btn-margin {
+		margin-bottom: 30px;
+	}
 </style>
 <p> HEEEEYYYYY </p>
 <div class="row">
 	<div class="col-xs-offset-1 col-xs-10 col-sm-offset-3 col-sm-6 col-md-offset-4 col-md-4">
-		<button type="button" class="btn btn-primary btn-lg" id="students">Students</button>
-		<button type="button" class="btn btn-default btn-lg pull-right" id="teachers">Teachers</button>
+		<button type="button" class="btn btn-primary btn-lg btn-margin"
+		id="students">Students</button>
+		<button type="button" class="btn btn-default btn-lg pull-right btn-margin"
+		id="teachers">Teachers</button>
 	</div>
 </div>
 <div class="" id="changeable">
@@ -57,7 +62,12 @@ Administrator Tools
 		</tbody>
 	</table>
 </div>
-
+<div class="row">
+	<div class="col-xs-offset-1 col-xs-10">
+		<button type="button" class="btn btn-default btn-block btn-margin"
+		data-toggle="modal" data-target="#modify" id="newentry">New Entry</button>
+	</div>
+</div>
 <div class="modal fade" id="modify" role="dialog">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -68,7 +78,12 @@ Administrator Tools
 			<div class="modal-body">
 				<form class="form-horizontal" role="form">
 					<input class="form-control" id="category" name="category" type="hidden">
-					<input class="form-control" id="id" name="id" type="hidden">
+					<div class="form-group">
+						<label for="id" class="col-lg-4 control-label">ID</label>
+						<div class="col-lg-8" data-toggle="tooltip" title="Please select a value for the ID.">
+							<input class="form-control" id="id" name="id" type="hidden">
+						</div>
+					</div>
 					<div class="form-group">
 						<label for="name" class="col-lg-4 control-label">Name</label>
 						<div class="col-lg-8">
@@ -120,9 +135,12 @@ Administrator Tools
 				</form>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal" id="save">Save Changes</button>
-				<button type="button" class="btn btn-default" data-dismiss="modal" id="del">Delete Entry</button>
-				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+				<button type="button" class="btn btn-default"
+				data-dismiss="modal" id="save">Save Changes</button>
+				<button type="button" class="btn btn-default"
+				data-dismiss="modal" id="del">Delete Entry</button>
+				<button type="button" class="btn btn-default"
+				data-dismiss="modal">Cancel</button>
 			</div>
 		</div>
 
@@ -140,6 +158,9 @@ Administrator Tools
 	title = document.getElementById('title'),
 	category = document.getElementById('category'),
 	id = document.getElementById('id'),
+	idDiv = $(id.parentNode),
+	idGroup = $(id.parentNode.parentNode),
+	hasIdError = false;
 	name1 = document.getElementById('name'),
 	email = document.getElementById('email'),
 	dob = document.getElementById('dob'),
@@ -149,7 +170,8 @@ Administrator Tools
 	cursched = document.getElementById('cursched'),
 	pastscheds = document.getElementById('pastscheds'),
 	save = $('#save'),
-	del = $('#del');
+	del = $('#del'),
+	newentry = $('#newentry');
 
 	function determineTableClass() {
 		// if window is now considered md or lg in bootstrap
@@ -240,8 +262,13 @@ Administrator Tools
 	}
 
 	function select(row) {
+		del.show();
+		save.removeClass('disabled');
+		save.attr('data-dismiss', 'modal');
 		category.value = currentTable.toLowerCase();
 		id.value = row.cells[0].innerHTML;
+		id.type = 'hidden';
+		idGroup.hide();
 		title.innerHTML =
 		'Data for ' + currentTable.slice(0, -1) + ' ' + id.value;
 		name1.value = blankOrValue(row.cells[1].innerHTML);
@@ -255,17 +282,19 @@ Administrator Tools
 	}
 
 	save.click(function() {
-		$.ajax({
-			type: 'POST',
-			url: '/admintools/modify',
-			data: $('form').serialize() + '&action=update',
-			success: function(response) {
-				getTable(currentTable.toLowerCase());
-			},
-			error: function() {
-				alert('ERROR: Could not connect to server.');
-			}
-		});
+		if (!save.hasClass('disabled')) {
+			$.ajax({
+				type: 'POST',
+				url: '/admintools/modify',
+				data: $('form').serialize() + '&action=update',
+				success: function(response) {
+					getTable(currentTable.toLowerCase());
+				},
+				error: function() {
+					alert('ERROR: Could not connect to server.');
+				}
+			});
+		}
 	});
 
 	del.click(function() {
@@ -280,6 +309,42 @@ Administrator Tools
 				alert('ERROR: Could not connect to server.');
 			}
 		});
+	});
+
+	$(id).on('input', function() {
+		if (this.value == '') {
+			if (!hasIdError) {
+				idGroup.addClass('has-error has-feedback');
+				idDiv.append(
+					'<span class="glyphicon glyphicon-remove form-control-feedback"></span>'
+					);
+				idDiv.tooltip('enable');
+				hasIdError = true;
+				save.addClass('disabled');
+				save.removeAttr('data-dismiss');
+			}
+		}
+		else {
+			if (hasIdError) {
+				idGroup.removeClass('has-error has-feedback');
+				idDiv.find('.glyphicon').remove();
+				idDiv.tooltip('disable');
+				hasIdError = false;
+			}
+			save.removeClass('disabled');
+			save.attr('data-dismiss', 'modal');
+		}
+	});
+
+	newentry.click(function() {
+		title.innerHTML = 'Data for New ' + currentTable.slice(0, -1)
+		del.hide();
+		save.addClass('disabled');
+		save.removeAttr('data-dismiss');
+		category.value = currentTable.toLowerCase();
+		id.type = 'text';
+		id.value = '';
+		idGroup.show();
 	});
 </script>
 {% endblock %}
