@@ -1,6 +1,6 @@
 from flask import Flask, render_template, session, request, redirect, url_for, make_response
 from utils import get_secret_key, initialize_database, check_login_info
-from admin import get_table, randCSV, upload_data
+from admin import get_table, update_table, randCSV, upload_data
 from json import dumps
 
 app = Flask(__name__)
@@ -60,6 +60,19 @@ def database():
 			)
 	return dumps(get_table(request.args['category']))
 
+@app.route('/admintools/update', methods=['POST'])
+def update():
+	if 'admin_username' not in session:
+		return make_response(
+			'Error: must be logged in as administrator to update database.'
+			)
+	d = request.form
+	update_table(
+		d['category'], d['id'], d['name'], d['email'], d['dob'],
+		d['address'], d['phone'], d['level'], d['cursched'], d['pastscheds']
+		)
+	return make_response('Success')
+
 @app.route('/download')
 def download():
 	d = request.args
@@ -85,13 +98,10 @@ def upload():
 		)))
 
 initialize_database()
-#app.debug = True
 app.secret_key = get_secret_key()
-#app.run(host="0.0.0.0", port = 8000, threaded=True)
+
 if __name__ == "__main__":
-	#initialize_database()
 	app.debug = True
-	#app.secret_key = get_secret_key()
 	# Users are not allowed to upload more than 20 MB of data.
 	app.config['MAX_CONTENT_LENGTH'] = 20 * 1024 * 1024
 	app.run(host="0.0.0.0", port=8000, threaded=True)

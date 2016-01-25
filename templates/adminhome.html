@@ -11,6 +11,17 @@ Administrator Tools
 {% endblock %}
 
 {% block content %}
+<style type="text/css">
+	.table-hideoverflow {
+		table-layout:fixed;
+	}
+	.table-hideoverflow td {
+		max-width:200px;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+</style>
 <p> HEEEEYYYYY </p>
 <div class="row">
 	<div class="col-xs-offset-1 col-xs-10 col-sm-offset-3 col-sm-6 col-md-offset-4 col-md-4">
@@ -18,48 +29,155 @@ Administrator Tools
 		<button type="button" class="btn btn-default btn-lg pull-right" id="teachers">Teachers</button>
 	</div>
 </div>
-<table class="table table-hover table-responsive">
-	<thead>
-		<tr>
-			<th>ID</th>
-			<th>Name</th>
-			<th>Email</th>
-			<th>Date of Birth</th>
-			<th>Address</th>
-			<th>Phone</th>
-			<th>Level</th>
-			<th>Current Schedule</th>
-			<th>Past Schedules</th>
-		</tr>
-	</thead>
-	<tbody id="table">
-	</tbody>
-</table>
+<div class="" id="changeable">
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Name</th>
+				<th>Email</th>
+				<th>Date of Birth</th>
+				<th>Address</th>
+				<th>Phone</th>
+				<th>Level</th>
+				<th>Current Schedule</th>
+				<th>Past Schedules</th>
+			</tr>
+		</thead>
+		<tbody id="table">
+		</tbody>
+	</table>
+</div>
 
+<div class="modal fade" id="modify" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title" id="title">Modify Data for </h4>
+			</div>
+			<div class="modal-body">
+				<form class="form-horizontal" role="form">
+					<input class="form-control" id="category" name="category" type="hidden">
+					<input class="form-control" id="id" name="id" type="hidden">
+					<div class="form-group">
+						<label for="name" class="col-lg-4 control-label">Name</label>
+						<div class="col-lg-8">
+							<input class="form-control" id="name" name="name" type="text">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="email" class="col-lg-4 control-label">Email</label>
+						<div class="col-lg-8">
+							<input class="form-control" id="email" name="email" type="text">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="dob" class="col-lg-4 control-label">Date of Birth</label>
+						<div class="col-lg-8">
+							<input class="form-control" id="dob" name="dob" type="text">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="address" class="col-lg-4 control-label">Address</label>
+						<div class="col-lg-8">
+							<input class="form-control" id="address" name="address" type="text">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="phone" class="col-lg-4 control-label">Phone</label>
+						<div class="col-lg-8">
+							<input class="form-control" id="phone" name="phone" type="text">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="level" class="col-lg-4 control-label">Level</label>
+						<div class="col-lg-8">
+							<input class="form-control" id="level" name="level" type="text">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="cursched" class="col-lg-4 control-label">Current Schedule</label>
+						<div class="col-lg-8">
+							<input class="form-control" id="cursched" name="cursched" type="text">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="pastscheds" class="col-lg-4 control-label">Past Schedules</label>
+						<div class="col-lg-8">
+							<input class="form-control" id="pastscheds" name="pastscheds" type="text">
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal" id="save">Save Changes</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal" id="del">Delete Entry</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+<script src="http://absurdjs.com/builds/absurd.organic.js"></script>
+<script src="http://absurdjs.com/builds/absurd.js"></script>
 <script type="text/javascript">
+	changeable = $('#changeable'),
+	mq = window.matchMedia('@media (min-width: 992px)'),
 	students = $('#students'),
 	teachers = $('#teachers'),
-	current = students,
-	table = document.getElementById('table');
+	currentTable = 'Students',
+	table = document.getElementById('table'),
+	title = document.getElementById('title'),
+	category = document.getElementById('category'),
+	id = document.getElementById('id'),
+	name1 = document.getElementById('name'),
+	email = document.getElementById('email'),
+	dob = document.getElementById('dob'),
+	address = document.getElementById('address'),
+	phone = document.getElementById('phone'),
+	level = document.getElementById('level'),
+	cursched = document.getElementById('cursched'),
+	pastscheds = document.getElementById('pastscheds'),
+	save = $('#save');
+
+	if(mq.matches) {
+		// the width of the browser is less than @screen-md-min
+		changeable.addClass('table-responsive');
+	}
+	else {
+		// the width of the browser is more than @screen-md-min
+		changeable.addClass('table-hideoverflow');
+	}
 
 	students.click(function() {
-		if (current == teachers) {
+		if (currentTable == 'Teachers') {
 			teachers.removeClass('btn-primary').addClass('btn-default');
 			students.removeClass('btn-default').addClass('btn-primary');
 			getTable('students');
-			current = students;
+			currentTable = 'Students';
 		}
 	});
 	getTable('students');
 
 	teachers.click(function() {
-		if (current == students) {
+		if (currentTable == 'Students') {
 			students.removeClass('btn-primary').addClass('btn-default');
 			teachers.removeClass('btn-default').addClass('btn-primary');
 			getTable('teachers');
-			current = teachers;
+			currentTable = 'Teachers';
 		}
 	});
+
+	function valueOrSpace(text) {
+		if (text == null) {
+			return ' ';
+		}
+		else {
+			return text;
+		}
+	}
 
 	function getTable(category) {
 		$.ajax({
@@ -69,23 +187,62 @@ Administrator Tools
 			success: function(response) {
 				table.innerHTML = '';
 				$.each(response, function(key, val) {
-					table.innerHTML += '<tr>' +
-						'<td>' + val['id'] + '</td>' +
-						'<td>' + val['name'] + '</td>' +
-						'<td>' + val['email'] + '</td>' +
-						'<td>' + val['dob'] + '</td>' +
-						'<td>' + val['address'] + '</td>' +
-						'<td>' + val['phone'] + '</td>' +
-						'<td>' + val['level'] + '</td>' +
-						'<td>' + val['cursched'] + '</td>' +
-						'<td>' + val['pastscheds'] + '</td>' +
-						'</tr>';
+					table.innerHTML += '<tr onclick="select(this)"' +
+					'data-toggle="modal" data-target="#modify">' +
+					'<td>' + val['id'] + '</td>' +
+					'<td>' + valueOrSpace(val['name']) + '</td>' +
+					'<td>' + valueOrSpace(val['email']) + '</td>' +
+					'<td>' + valueOrSpace(val['dob']) + '</td>' +
+					'<td>' + valueOrSpace(val['address']) + '</td>' +
+					'<td>' + valueOrSpace(val['phone']) + '</td>' +
+					'<td>' + valueOrSpace(val['level']) + '</td>' +
+					'<td>' + valueOrSpace(val['cursched']) + '</td>' +
+					'<td>' + valueOrSpace(val['pastscheds']) + '</td>' +
+					'</tr>';
 				});
+			},
+			error: function(responseText) {
+				console.log('OH NO' + responseText);
+			}
+		});
+	}
+
+	function blankOrValue(text) {
+		if (text == ' ') {
+			return '';
+		}
+		else {
+			return text;
+		}
+	}
+
+	function select(row) {
+		category.value = currentTable.toLowerCase();
+		id.value = row.cells[0].innerHTML;
+		title.innerHTML = 'Modify Data for ' + category.value + ' ' + id.value;
+		name1.value = blankOrValue(row.cells[1].innerHTML);
+		email.value = blankOrValue(row.cells[2].innerHTML);
+		dob.value = blankOrValue(row.cells[3].innerHTML);
+		address.value = blankOrValue(row.cells[4].innerHTML);
+		phone.value = blankOrValue(row.cells[5].innerHTML);
+		level.value = blankOrValue(row.cells[6].innerHTML);
+		cursched.value = blankOrValue(row.cells[7].innerHTML);
+		pastscheds.value = blankOrValue(row.cells[8].innerHTML);
+	}
+
+	save.click(function() {
+		$.ajax({
+			type: 'POST',
+			url: '/admintools/update',
+			data: $('form').serialize(),
+			success: function(response) {
+				console.log(response);
+				getTable(currentTable.toLowerCase());
 			},
 			error: function(responseText, statusText, xhr) {
 				console.log('OH NO' + responseText);
 			}
 		});
-	}
+	});
 </script>
 {% endblock %}
