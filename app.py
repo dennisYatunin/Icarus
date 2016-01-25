@@ -1,6 +1,6 @@
 from flask import Flask, render_template, session, request, redirect, url_for, make_response
 from utils import get_secret_key, initialize_database, check_login_info
-from admin import get_table, update_table, randCSV, upload_data
+from admin import get_table, update_entry, delete_entry, randCSV, upload_data
 from json import dumps
 
 app = Flask(__name__)
@@ -60,17 +60,21 @@ def database():
 			)
 	return dumps(get_table(request.args['category']))
 
-@app.route('/admintools/update', methods=['POST'])
-def update():
+@app.route('/admintools/modify', methods=['POST'])
+def modify():
 	if 'admin_username' not in session:
 		return make_response(
-			'Error: must be logged in as administrator to update database.'
+			'Error: must be logged in as administrator to modify database.'
 			)
 	d = request.form
-	update_table(
-		d['category'], d['id'], d['name'], d['email'], d['dob'],
-		d['address'], d['phone'], d['level'], d['cursched'], d['pastscheds']
-		)
+	if d['action'] == 'update':
+		update_entry(
+			d['category'], d['id'], d['name'], d['email'],
+			d['dob'], d['address'], d['phone'], d['level'],
+			d['cursched'], d['pastscheds']
+			)
+	else:
+		delete_entry(d['category'], d['id'])
 	return make_response('Success')
 
 @app.route('/download')

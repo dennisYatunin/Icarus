@@ -21,6 +21,15 @@ Administrator Tools
 		overflow: hidden;
 		text-overflow: ellipsis;
 	}
+	.table-hideoverflow-sm {
+		table-layout:fixed;
+	}
+	.table-hideoverflow-sm td {
+		max-width:100px;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
 </style>
 <p> HEEEEYYYYY </p>
 <div class="row">
@@ -124,7 +133,6 @@ Administrator Tools
 <script src="http://absurdjs.com/builds/absurd.js"></script>
 <script type="text/javascript">
 	changeable = $('#changeable'),
-	mq = window.matchMedia('@media (min-width: 992px)'),
 	students = $('#students'),
 	teachers = $('#teachers'),
 	currentTable = 'Students',
@@ -140,16 +148,31 @@ Administrator Tools
 	level = document.getElementById('level'),
 	cursched = document.getElementById('cursched'),
 	pastscheds = document.getElementById('pastscheds'),
-	save = $('#save');
+	save = $('#save'),
+	del = $('#del');
 
-	if(mq.matches) {
-		// the width of the browser is less than @screen-md-min
-		changeable.addClass('table-responsive');
+	function determineTableClass() {
+		// if window is now considered md or lg in bootstrap
+		if (window.innerWidth >= 992) {
+			changeable.removeClass('table-responsive');
+			changeable.removeClass('table-hideoverflow-sm');
+			changeable.addClass('table-hideoverflow');
+		}
+		// if window is now considered sm in bootstrap
+		else if (window.innerWidth >= 768) {
+			changeable.removeClass('table-responsive');
+			changeable.removeClass('table-hideoverflow');
+			changeable.addClass('table-hideoverflow-sm');
+		}
+		// if window is now considered xs in bootstrap
+		else {
+			changeable.removeClass('table-hideoverflow');
+			changeable.removeClass('table-hideoverflow-sm');
+			changeable.addClass('table-responsive');
+		}
 	}
-	else {
-		// the width of the browser is more than @screen-md-min
-		changeable.addClass('table-hideoverflow');
-	}
+	determineTableClass();
+	window.onresize = determineTableClass;
 
 	students.click(function() {
 		if (currentTable == 'Teachers') {
@@ -179,11 +202,11 @@ Administrator Tools
 		}
 	}
 
-	function getTable(category) {
+	function getTable(tableCategory) {
 		$.ajax({
 			dataType: 'json',
 			url: '/admintools/database',
-			data: {'category': category},
+			data: {'category': tableCategory},
 			success: function(response) {
 				table.innerHTML = '';
 				$.each(response, function(key, val) {
@@ -201,8 +224,8 @@ Administrator Tools
 					'</tr>';
 				});
 			},
-			error: function(responseText) {
-				console.log('OH NO' + responseText);
+			error: function() {
+				alert('ERROR: Could not connect to server.');
 			}
 		});
 	}
@@ -219,7 +242,8 @@ Administrator Tools
 	function select(row) {
 		category.value = currentTable.toLowerCase();
 		id.value = row.cells[0].innerHTML;
-		title.innerHTML = 'Modify Data for ' + category.value + ' ' + id.value;
+		title.innerHTML =
+		'Data for ' + currentTable.slice(0, -1) + ' ' + id.value;
 		name1.value = blankOrValue(row.cells[1].innerHTML);
 		email.value = blankOrValue(row.cells[2].innerHTML);
 		dob.value = blankOrValue(row.cells[3].innerHTML);
@@ -233,14 +257,27 @@ Administrator Tools
 	save.click(function() {
 		$.ajax({
 			type: 'POST',
-			url: '/admintools/update',
-			data: $('form').serialize(),
+			url: '/admintools/modify',
+			data: $('form').serialize() + '&action=update',
 			success: function(response) {
-				console.log(response);
 				getTable(currentTable.toLowerCase());
 			},
-			error: function(responseText, statusText, xhr) {
-				console.log('OH NO' + responseText);
+			error: function() {
+				alert('ERROR: Could not connect to server.');
+			}
+		});
+	});
+
+	del.click(function() {
+		$.ajax({
+			type: 'POST',
+			url: '/admintools/modify',
+			data: $('form').serialize() + '&action=delete',
+			success: function(response) {
+				getTable(currentTable.toLowerCase());
+			},
+			error: function() {
+				alert('ERROR: Could not connect to server.');
 			}
 		});
 	});

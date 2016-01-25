@@ -19,7 +19,7 @@ def get_table(category):
 	conn.close()
 	return results
 
-def update_table(
+def update_entry(
 	category, idnum, name, email, dob, address,
 	phone, level, cursched, pastscheds
 	):
@@ -33,6 +33,14 @@ def update_table(
 	c.execute(q, tuple(value if value else None for value in [
 		idnum, name, email, dob, address, phone, level, cursched, pastscheds
 		]))
+	conn.commit()
+	conn.close()
+
+def delete_entry(category, idnum):
+	conn = connect('data.db')
+	c = conn.cursor()
+	q = 'DELETE FROM %s WHERE id = ?' % category
+	c.execute(q, (idnum, ))
 	conn.commit()
 	conn.close()
 

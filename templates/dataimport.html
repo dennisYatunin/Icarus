@@ -126,9 +126,9 @@ Administrator Tools
 				<option>1</option>
 			</select>
 		</div>
-		<div class="col-sm-offset-3 col-sm-2 col-md-offset-4 control-label">Phone</div>
+		<div class="col-sm-offset-3 col-sm-2 col-md-offset-4 control-label">Date of Birth</div>
 		<div class="col-sm-7 col-md-3">
-			<select class="form-control column-select" name="phone"
+			<select class="form-control column-select" name="dob"
 			data-toggle="tooltip" title="Please do not use the same column more than once.">
 				<option></option>
 				<option>1</option>
@@ -142,9 +142,9 @@ Administrator Tools
 				<option>1</option>
 			</select>
 		</div>
-		<div class="col-sm-offset-3 col-sm-2 col-md-offset-4 control-label">Date of Birth</div>
+		<div class="col-sm-offset-3 col-sm-2 col-md-offset-4 control-label">Phone</div>
 		<div class="col-sm-7 col-md-3">
-			<select class="form-control column-select" name="dob"
+			<select class="form-control column-select" name="phone"
 			data-toggle="tooltip" title="Please do not use the same column more than once.">
 				<option></option>
 				<option>1</option>
@@ -342,7 +342,7 @@ Administrator Tools
 				alt="Uploading" class="img-responsive col-sm-2" id="loading"></img>'
 				);
 		},
-		success: function(responseText, statusText, xhr, $form) {
+		success: function() {
 			submissionInfo.find('#loading').remove();
 			submissionInfo.append(
 				'<div class="alert alert-success alert-sm fade in" id="message"> \
@@ -350,7 +350,9 @@ Administrator Tools
 					Data successfully uploaded. \
 				</div>'
 				);
-			console.log(responseText);
+		}
+		error: function() {
+			alert('ERROR: Could not connect to server.');
 		}
 	};
 
