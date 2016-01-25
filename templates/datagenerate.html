@@ -12,20 +12,9 @@ Administrator Tools
 
 {% block content %}
 <p>
-	This tool allows you to generate random data for testing the various functions of Administrator Tools.
-	Every data file will include a column for names, and several other columns may be added.
-	Deleting random entries will result any cell of an optional column having a certain probability of being empty
-	(similarly to how real databases often have missing information).
+	Generate random data for testing the various functions of Administrator Tools. Every data file will include a column for IDs (which are always unique), and several other columns may be added. Deleting random entries will result any cell of an optional column having a certain probability of being empty (similarly to how real databases often have missing information).
 </p>
 <form class="form-horizontal" role="form">
-	<div class="form-group">
-		<label for="filetype" class="col-sm-3 col-md-4 control-label">Filetype</label>
-		<div class="col-sm-9 col-md-5">
-			<select id="filetype" class="form-control" name="filetype">
-				<option>CSV</option>
-			</select>
-		</div>
-	</div>
 	<div class="form-group" id="numPeopleGroup">
 		<label for="numPeople" class="col-sm-3 col-md-4 control-label">Number of People</label>
 		<div class="col-sm-9 col-md-5" id="numPeopleDiv">
@@ -35,9 +24,18 @@ Administrator Tools
 		</div>
 	</div>
 	<div class="form-group">
+		<label for="category" class="col-sm-3 col-md-4 control-label">Data Category</label>
+		<div class="col-sm-9 col-md-5">
+			<select id="category" class="form-control" name="category">
+				<option value="students">Students</option>
+				<option value="teachers">Teachers</option>
+			</select>
+		</div>
+	</div>
+	<div class="form-group">
 		<label class="col-sm-3 col-md-4 control-label">Optional Data</label>
 		<div class="col-sm-9 col-md-6">
-			<label class="checkbox-inline"><input type="checkbox" name="id">ID</label>
+			<label class="checkbox-inline"><input type="checkbox" name="name">Name</label>
 			<label class="checkbox-inline"><input type="checkbox" name="grade">Grade</label>
 			<label class="checkbox-inline"><input type="checkbox" name="email">Email</label>
 			<label class="checkbox-inline"><input type="checkbox" name="phone">Phone</label>
